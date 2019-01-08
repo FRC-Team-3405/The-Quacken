@@ -1,5 +1,9 @@
 package frc.robot.maps
 
+import edu.wpi.first.wpilibj.Joystick
+import edu.wpi.first.wpilibj.buttons.JoystickButton
+import javax.swing.AbstractButton
+
 object XboxMap {
 
     //Buttons
@@ -11,9 +15,9 @@ object XboxMap {
     const val RightBumperButton = 6
     const val LeftLowerBumperButton = 7
     const val RightLowerBumperButton = 8
-    const val nineButton = 9
-    const val tenButton = 10
-    const val elevenButton = 11
+    const val NineButton = 9
+    const val TenButton = 10
+    const val ElevenButton = 11
     const val LeftJoystickButton = 12
     const val RightJoystickButton = 13
 
@@ -26,4 +30,34 @@ object XboxMap {
     //POV
     const val PovController = 0
 
+    class Controller(private val joystick: Joystick) {
+        val rightX
+            get() = joystick.getRawAxis(XboxMap.RightXAxis)
+
+        val rightY
+            get() = joystick.getRawAxis(XboxMap.RightYAxis)
+
+        val leftX
+            get() = joystick.getRawAxis(XboxMap.LeftXAxis)
+
+        val leftY
+            get() = joystick.getRawAxis(XboxMap.LeftYAxis)
+
+        val povController
+            get() = joystick.getPOV(XboxMap.PovController)
+
+        val AButton = JoystickButton(joystick, XboxMap.AButton)
+        val BButton = JoystickButton(joystick, XboxMap.BButton)
+        val XButton = JoystickButton(joystick, XboxMap.XButton)
+        val YButton = JoystickButton(joystick, XboxMap.YButton)
+        val LeftBumperButton = JoystickButton(joystick, XboxMap.LeftBumperButton)
+        val RightBumperButton = JoystickButton(joystick, XboxMap.RightBumperButton)
+        val LeftLowerBumperButton = JoystickButton(joystick, XboxMap.LeftLowerBumperButton)
+        val RightLowerBumperButton = JoystickButton(joystick, XboxMap.RightLowerBumperButton)
+        val NineButton = JoystickButton(joystick, XboxMap.NineButton)
+        val TenButton = JoystickButton(joystick, XboxMap.TenButton)
+        val ElevenButton = JoystickButton(joystick, XboxMap.ElevenButton)
+        val LeftJoystickButton = JoystickButton(joystick, XboxMap.LeftJoystickButton)
+        val RightJoystickButton = JoystickButton(joystick, XboxMap.RightJoystickButton)
+    }
 }

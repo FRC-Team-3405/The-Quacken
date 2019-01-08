@@ -1,5 +1,8 @@
 package frc.robot.maps
 
+import edu.wpi.first.wpilibj.Joystick
+import edu.wpi.first.wpilibj.buttons.JoystickButton
+
 object JoystickMap {
 
     //Buttons
@@ -19,5 +22,26 @@ object JoystickMap {
     const val xAxis = 0
     const val yAxis = 1
     const val zAxis = 2
+
+    class Controller(private val joystick: Joystick) {
+        val x
+            get() = joystick.getRawAxis(JoystickMap.xAxis)
+        val y
+            get() = joystick.getRawAxis(JoystickMap.yAxis)
+        val z
+            get() = joystick.getRawAxis(JoystickMap.zAxis)
+
+        val triggerButton = JoystickButton(joystick, JoystickMap.triggerButton)
+        val twoButton = JoystickButton(joystick, JoystickMap.twoButton)
+        val threeButton = JoystickButton(joystick, JoystickMap.threeButton)
+        val fourButton = JoystickButton(joystick, JoystickMap.fourButton)
+        val fiveButton = JoystickButton(joystick, JoystickMap.fiveButton)
+        val sixButton = JoystickButton(joystick, JoystickMap.sixButton)
+        val sevenButton = JoystickButton(joystick, JoystickMap.sevenButton)
+        val eightButton = JoystickButton(joystick, JoystickMap.eightButton)
+        val nineButton = JoystickButton(joystick, JoystickMap.nineButton)
+        val tenButton = JoystickButton(joystick, JoystickMap.tenButton)
+        val elevenButton = JoystickButton(joystick, JoystickMap.elevenButton)
+    }
 
 }
