@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.subsystems.Accelerometer
 import frc.robot.subsystems.DriveTrain
+import frc.robot.subsystems.Feeder
+import frc.robot.subsystems.Pneumatics
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -100,6 +102,8 @@ class Robot : TimedRobot() {
 
         //Drive subsystems
         val driveTrain = DriveTrain()
+        val pneumatics = Pneumatics()
+        val feeder = Feeder()
 
         //Sensor subsystems
         val builtInAccelerometer = Accelerometer()
