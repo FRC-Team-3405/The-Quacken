@@ -5,9 +5,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.subsystems.PneumaticState
 
 class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: String) {
-    private val solenoidState get() = doubleSolenoid.get()
+    val solenoidState get() = doubleSolenoid.get()
 
     fun forward() {
+        println("Pneumatic $name forward")
         checkFault()
         if(doubleSolenoid.get() != DoubleSolenoid.Value.kForward) {
             doubleSolenoid.set(DoubleSolenoid.Value.kForward)
@@ -15,6 +16,7 @@ class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: St
     }
 
     fun reverse() {
+        println("Pneumatic $name reverse")
         checkFault()
         if(doubleSolenoid.get() != DoubleSolenoid.Value.kReverse) {
             doubleSolenoid.set(DoubleSolenoid.Value.kReverse)
@@ -22,6 +24,7 @@ class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: St
     }
 
     fun off() {
+        println("Pneumatic $name off")
         checkFault()
         if(doubleSolenoid.get() != DoubleSolenoid.Value.kOff) {
             doubleSolenoid.set(DoubleSolenoid.Value.kOff)

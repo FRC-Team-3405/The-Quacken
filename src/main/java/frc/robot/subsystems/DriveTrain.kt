@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
 import frc.robot.commands.runners.RunDriveTrainCommand
 import frc.robot.utilties.ReportableSubsystem
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 const val MAX_SPEED = 0.7
 
@@ -19,10 +21,10 @@ enum class Direction(val sign: Int) {
 
 class DriveTrain: Subsystem(), ReportableSubsystem {
 
-//    private val frontRight = TalonSRX(0) //Right Bottom
-//    private val frontLeft = TalonSRX(1) //Left Top
-//    private val backLeft = TalonSRX(2) //Left Bottom
-//    private val backRight = TalonSRX(3) //Right Top
+    private val frontRight = TalonSRX(0) //Right Bottom
+    private val frontLeft = TalonSRX(1) //Left Top
+    private val backLeft = TalonSRX(2) //Left Bottom
+    private val backRight = TalonSRX(3) //Right Top
     var direction = Direction.FORWARD
 
     override fun initDefaultCommand() {
@@ -64,12 +66,12 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
     private fun driveSide(side: Side, power: Double) {
         when(side) {
             Side.LEFT -> {
-//                frontLeft.set(ControlMode.PercentOutput, power * direction.sign)
-//                backLeft.set(ControlMode.PercentOutput, power * direction.sign)
+               frontLeft.set(ControlMode.PercentOutput, power * direction.sign)
+               backLeft.set(ControlMode.PercentOutput, power * direction.sign)
             }
             Side.RIGHT -> {
-//                frontRight.set(ControlMode.PercentOutput, power * -direction.sign)
-//                backRight.set(ControlMode.PercentOutput, power * -direction.sign)
+               frontRight.set(ControlMode.PercentOutput, power * -direction.sign)
+               backRight.set(ControlMode.PercentOutput, power * -direction.sign)
             }
         }
     }

@@ -6,10 +6,12 @@ import frc.robot.Robot
 class SwitchDirectionCommand: Command() {
 
     init {
+        println("Initializing direction switcher command")
         requires(Robot.driveTrain)
     }
 
     override fun execute() {
+        println("Switching direction...")
         Robot.driveTrain.switchDirection()
     }
 

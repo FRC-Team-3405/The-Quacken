@@ -1,5 +1,6 @@
 package frc.robot.subsystems
 
+import edu.wpi.first.wpilibj.AnalogInput
 import edu.wpi.first.wpilibj.Compressor
 import edu.wpi.first.wpilibj.DoubleSolenoid
 import edu.wpi.first.wpilibj.command.Subsystem
@@ -17,10 +18,11 @@ enum class PneumaticState(val kDirection: DoubleSolenoid.Value) {
 class Pneumatics: Subsystem(), ReportableSubsystem {
 
     private val compressor = Compressor(0)
+    private val pressureSensor = AnalogInput(0)
 
-    val shifter = TwoStatePneumatic(DoubleSolenoid(TODO(), TODO()), "shifter")
-    val plateGrabber = TwoStatePneumatic(DoubleSolenoid(TODO(), TODO()), "plategrabber")
-    val platePuncher = TwoStatePneumatic(DoubleSolenoid(TODO(), TODO()), "platepusher")
+    val shifter = TwoStatePneumatic(DoubleSolenoid(5, 4), "shifter")
+    val plateGrabber = TwoStatePneumatic(DoubleSolenoid(3, 2), "plategrabber")
+    val platePuncher = TwoStatePneumatic(DoubleSolenoid(1, 0), "platepuncher")
 
     override fun initDefaultCommand() {
         compressor.enabled()
@@ -38,7 +40,21 @@ class Pneumatics: Subsystem(), ReportableSubsystem {
     }
 
     override fun report() {
+        SmartDashboard.putString("plategrabber_direction", plateGrabber.solenoidState.toString())
+        SmartDashboard.putString("platepuncher_direction", platePuncher.solenoidState.toString())
+        SmartDashboard.putString("shifter_direction", shifter.solenoidState.toString())
         SmartDashboard.putBoolean("compressor_pressureswitchvalue", compressor.pressureSwitchValue)
+
+        SmartDashboard.putNumber("Analog Pressure Sensor Voltage", pressureSensor.voltage)
+        SmartDashboard.putNumber("~Pressure (PSI)", analogToUnitPSI(pressureSensor.voltage))
+
+    }
+
+    companion object {
+        private const val SENSOR_VOLTAGE = 5.0
+        private fun analogToUnitPSI(voltage: Double): Double {
+            return 250 * (voltage / SENSOR_VOLTAGE) - 25
+        }
     }
 
 }

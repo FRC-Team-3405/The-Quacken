@@ -10,6 +10,7 @@ package frc.robot
 import edu.wpi.first.cameraserver.CameraServer
 import edu.wpi.first.wpilibj.Joystick
 import edu.wpi.first.wpilibj.TimedRobot
+import edu.wpi.first.wpilibj.command.Scheduler
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.commands.*
@@ -38,17 +39,12 @@ class Robot : TimedRobot() {
         mchooser.addOption("My Auto", kCustomAuto)
         SmartDashboard.putData("Auto choices", mchooser)
 
-        //Register button presses
-        joystick.AButton.whenPressed(SwitchDirectionCommand())
-        //BButton
-        joystick.XButton.whenPressed(TogglePlatePuncherCommand())
-        joystick.YButton.whenPressed(TogglePlateGrabberCommand())
-        joystick.LeftBumperButton.whenPressed(ShiftDownCommand())
-        joystick.RightBumperButton.whenPressed(ShiftUpCommand())
-
         GlobalScope.launch {
-            CameraServer.getInstance().startAutomaticCapture()
-            CameraServer.getInstance().addAxisCamera("axis-camera.local")
+            val usbCamera = CameraServer.getInstance().startAutomaticCapture()
+            val axisCamera = CameraServer.getInstance().addAxisCamera("axis-camera.local")
+
+            usbCamera.setResolution(640, 480)
+            axisCamera.setResolution(640, 480)
         }
     }
 
@@ -109,13 +105,23 @@ class Robot : TimedRobot() {
         gyroscope.initGryo()
         gyroscope.reset()
 
+
+        println("Registering buttons!")
+        //Register button presses
+        joystick.AButton.whenPressed(SwitchDirectionCommand())
+        //BButton
+        joystick.XButton.whenPressed(TogglePlatePuncherCommand())
+        joystick.YButton.whenPressed(TogglePlateGrabberCommand())
+        joystick.LeftBumperButton.whenPressed(ShiftDownCommand())
+        joystick.RightBumperButton.whenPressed(ShiftUpCommand())
+
     }
 
     /**
      * This function is called periodically during operator control.
      */
     override fun teleopPeriodic() {
-
+        Scheduler.getInstance().run()
     }
 
     /**
