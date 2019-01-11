@@ -7,13 +7,16 @@
 
 package frc.robot
 
+import edu.wpi.first.cameraserver.CameraServer
+import edu.wpi.first.wpilibj.Joystick
 import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import frc.robot.subsystems.Accelerometer
-import frc.robot.subsystems.DriveTrain
-import frc.robot.subsystems.Feeder
-import frc.robot.subsystems.Pneumatics
+import frc.robot.commands.*
+import frc.robot.maps.XboxMap
+import frc.robot.subsystems.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +37,19 @@ class Robot : TimedRobot() {
         mchooser.setDefaultOption("Default Auto", kDefaultAuto)
         mchooser.addOption("My Auto", kCustomAuto)
         SmartDashboard.putData("Auto choices", mchooser)
+
+        //Register button presses
+        joystick.AButton.whenPressed(SwitchDirectionCommand())
+        //BButton
+        joystick.XButton.whenPressed(TogglePlatePuncherCommand())
+        joystick.YButton.whenPressed(TogglePlateGrabberCommand())
+        joystick.LeftBumperButton.whenPressed(ShiftDownCommand())
+        joystick.RightBumperButton.whenPressed(ShiftUpCommand())
+
+        GlobalScope.launch {
+            CameraServer.getInstance().startAutomaticCapture()
+            CameraServer.getInstance().addAxisCamera("axis-camera.local")
+        }
     }
 
     /**
@@ -46,7 +62,7 @@ class Robot : TimedRobot() {
      * LiveWindow and SmartDashboard integrated updating.
      */
     override fun robotPeriodic() {
-
+        SmartDashboard.updateValues()
     }
 
     /**
@@ -65,6 +81,8 @@ class Robot : TimedRobot() {
         autoSelected = mchooser.selected
         // autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
         println("Auto selected: " + autoSelected!!)
+        gyroscope.initGryo()
+        gyroscope.reset()
     }
 
     /**
@@ -73,13 +91,24 @@ class Robot : TimedRobot() {
     override fun autonomousPeriodic() {
         when (autoSelected) {
             kCustomAuto -> {
+                println("Custom auto...")
             }
             kDefaultAuto -> {
+                println("Default auto...")
             }
             else -> {
+                println("? auto...")
             }
-        }// Put custom auto code here
-        // Put default auto code here
+        }
+    }
+
+    /**
+     * This function is run when teleop is first started.
+     */
+    override fun teleopInit() {
+        gyroscope.initGryo()
+        gyroscope.reset()
+
     }
 
     /**
@@ -90,15 +119,38 @@ class Robot : TimedRobot() {
     }
 
     /**
+     * This function is run when test is first started.
+     */
+    override fun testInit() {
+
+    }
+
+    /**
      * This function is called periodically during test mode.
      */
     override fun testPeriodic() {
 
     }
 
+    /**
+     * This function is run when robot is first disabled.
+     */
+    override fun disabledInit() {
+
+    }
+
+    /**
+     * This function is called periodically while disabled.
+     */
+    override fun disabledPeriodic() {
+
+    }
+
     companion object {
         private const val kDefaultAuto = "Default"
         private const val kCustomAuto = "My Auto"
+
+        val joystick = XboxMap.Controller(Joystick(0))
 
         //Drive subsystems
         val driveTrain = DriveTrain()
@@ -107,6 +159,7 @@ class Robot : TimedRobot() {
 
         //Sensor subsystems
         val builtInAccelerometer = Accelerometer()
+        val gyroscope = Gyroscope()
 
         //Camera Subsystems
         //TODO

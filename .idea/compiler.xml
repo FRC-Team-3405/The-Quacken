@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="2019_main" target="1.10" />
-      <module name="2019_test" target="1.10" />
+      <module name="2019_main" target="11" />
+      <module name="2019_test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

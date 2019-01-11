@@ -43,8 +43,8 @@ object XboxMap {
         val leftY
             get() = joystick.getRawAxis(XboxMap.LeftYAxis)
 
-        val povController
-            get() = joystick.getPOV(XboxMap.PovController)
+        val povController: PovDirections
+            get() = PovDirections.fromInt(joystick.getPOV(XboxMap.PovController))
 
         val AButton = JoystickButton(joystick, XboxMap.AButton)
         val BButton = JoystickButton(joystick, XboxMap.BButton)
@@ -59,5 +59,33 @@ object XboxMap {
         val ElevenButton = JoystickButton(joystick, XboxMap.ElevenButton)
         val LeftJoystickButton = JoystickButton(joystick, XboxMap.LeftJoystickButton)
         val RightJoystickButton = JoystickButton(joystick, XboxMap.RightJoystickButton)
+    }
+
+    enum class PovDirections(val value: Int) {
+        UP(0),
+        UP_RIGHT(45),
+        RIGHT(90),
+        DOWN_RIGHT(135),
+        DOWN(180),
+        DOWN_LEFT(225),
+        LEFT(270),
+        UP_LEFT(315),
+        NULL(-1);
+
+        companion object {
+            fun fromInt(value: Int): PovDirections {
+                return when(value) {
+                    0 -> UP
+                    45 -> UP_LEFT
+                    90 -> RIGHT
+                    135 -> DOWN_RIGHT
+                    180 -> DOWN
+                    225 -> DOWN_LEFT
+                    270 -> LEFT
+                    315 -> UP_LEFT
+                    else -> NULL
+                }
+            }
+        }
     }
 }

@@ -9,7 +9,8 @@ class RunDriveTrainCommand: Command() {
     }
 
     override fun execute() {
-
+        Robot.driveTrain.tankDrive()
+        Robot.driveTrain.report()
     }
 
     override fun isFinished() = false

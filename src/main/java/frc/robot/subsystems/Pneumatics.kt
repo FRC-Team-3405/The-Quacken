@@ -6,6 +6,13 @@ import edu.wpi.first.wpilibj.command.Subsystem
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.commands.runners.RunPneumaticsCommand
 import frc.robot.utilties.ReportableSubsystem
+import frc.robot.utilties.TwoStatePneumatic
+
+enum class PneumaticState(val kDirection: DoubleSolenoid.Value) {
+    FORWARD(DoubleSolenoid.Value.kForward),
+    BACKWARD(DoubleSolenoid.Value.kReverse),
+    OFF(DoubleSolenoid.Value.kOff)
+}
 
 class Pneumatics: Subsystem(), ReportableSubsystem {
 
@@ -13,9 +20,7 @@ class Pneumatics: Subsystem(), ReportableSubsystem {
 
     val shifter = TwoStatePneumatic(DoubleSolenoid(TODO(), TODO()), "shifter")
     val plateGrabber = TwoStatePneumatic(DoubleSolenoid(TODO(), TODO()), "plategrabber")
-    val platePusher = TwoStatePneumatic(DoubleSolenoid(TODO(), TODO()), "platepusher")
-
-
+    val platePuncher = TwoStatePneumatic(DoubleSolenoid(TODO(), TODO()), "platepusher")
 
     override fun initDefaultCommand() {
         compressor.enabled()
@@ -23,39 +28,17 @@ class Pneumatics: Subsystem(), ReportableSubsystem {
     }
 
 
-    override fun report() {
-
+    //TODO test these functions
+    fun shiftUp() {
+        shifter.setState(PneumaticState.FORWARD)
     }
 
-    class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: String) {
-        private var solenoidState = doubleSolenoid.get()
+    fun shiftDown() {
+        shifter.setState(PneumaticState.BACKWARD)
+    }
 
-        fun forward() {
-            checkFault()
-            if(doubleSolenoid.get() != DoubleSolenoid.Value.kForward) {
-                doubleSolenoid.set(DoubleSolenoid.Value.kForward)
-            }
-        }
-
-        fun reverse() {
-            checkFault()
-            if(doubleSolenoid.get() != DoubleSolenoid.Value.kReverse) {
-                doubleSolenoid.set(DoubleSolenoid.Value.kReverse)
-            }
-        }
-
-        fun off() {
-            checkFault()
-            if(doubleSolenoid.get() != DoubleSolenoid.Value.kOff) {
-                doubleSolenoid.set(DoubleSolenoid.Value.kOff)
-            }
-        }
-
-        private fun checkFault() {
-            SmartDashboard.putBoolean("fwd_solenoid_fault_$name", doubleSolenoid.isFwdSolenoidBlackListed)
-            SmartDashboard.putBoolean("rev_solenoid_fault_$name", doubleSolenoid.isRevSolenoidBlackListed)
-        }
-
+    override fun report() {
+        SmartDashboard.putBoolean("compressor_pressureswitchvalue", compressor.pressureSwitchValue)
     }
 
 }
