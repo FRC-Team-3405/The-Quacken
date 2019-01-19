@@ -21,7 +21,7 @@ class ShiftDownCommand: Command() {
     }
 
     override fun execute() {
-        Robot.pneumatics.shiftUp()
+        Robot.pneumatics.shiftDown()
     }
 
     override fun isFinished() = true
