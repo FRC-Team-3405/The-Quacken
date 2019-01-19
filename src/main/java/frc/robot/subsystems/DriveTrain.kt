@@ -7,6 +7,7 @@ import frc.robot.commands.runners.RunDriveTrainCommand
 import frc.robot.utilties.ReportableSubsystem
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.Talon
 
 const val MAX_SPEED = 0.7
 
@@ -21,10 +22,10 @@ enum class Direction(val sign: Int) {
 
 class DriveTrain: Subsystem(), ReportableSubsystem {
 
-    private val frontRight = TalonSRX(0) //Right Bottom
-    private val frontLeft = TalonSRX(1) //Left Top
-    private val backLeft = TalonSRX(2) //Left Bottom
-    private val backRight = TalonSRX(3) //Right Top
+    private val frontRight = Talon(0) //Right Bottom
+    private val frontLeft = Talon(1) //Left Top
+    private val backLeft = Talon(2) //Left Bottom
+    private val backRight = Talon(3) //Right Top
     var direction = Direction.FORWARD
 
     override fun initDefaultCommand() {

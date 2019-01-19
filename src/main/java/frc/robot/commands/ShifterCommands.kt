@@ -9,7 +9,7 @@ class ShiftUpCommand: Command() {
     }
 
     override fun execute() {
-        Robot.pneumatics.shiftUp()
+       // Robot.pneumatics.shiftUp()
     }
 
     override fun isFinished() = true
@@ -21,7 +21,7 @@ class ShiftDownCommand: Command() {
     }
 
     override fun execute() {
-        Robot.pneumatics.shiftDown()
+       // Robot.pneumatics.shiftDown()
     }
 
     override fun isFinished() = true

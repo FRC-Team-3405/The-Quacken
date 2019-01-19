@@ -10,8 +10,8 @@ class RunFeederCommand: Command() {
     }
 
     override fun execute() {
-        Robot.feeder.runFeeder()
-        Robot.feeder.report()
+       // Robot.feeder.runFeeder()
+        //Robot.feeder.report()
     }
 
     override fun isFinished() = false

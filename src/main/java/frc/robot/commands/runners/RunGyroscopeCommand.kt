@@ -10,7 +10,7 @@ class RunGyroscopeCommand: Command() {
     }
 
     override fun execute() {
-        Robot.gyroscope.report()
+        //Robot.gyroscope.report()
     }
 
     override fun isFinished() = false

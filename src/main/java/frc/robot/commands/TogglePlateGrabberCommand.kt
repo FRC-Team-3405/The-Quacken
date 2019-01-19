@@ -11,7 +11,7 @@ class TogglePlateGrabberCommand: Command() {
 
     override fun execute() {
         println("Toggling plate grabber...")
-        Robot.pneumatics.plateGrabber.toggleState()
+        //Robot.pneumatics.plateGrabber.toggleState()
     }
 
     override fun isFinished() = true

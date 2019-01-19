@@ -10,7 +10,7 @@ class RunPneumaticsCommand: Command() {
     }
 
     override fun execute() {
-        Robot.pneumatics.report()
+       // Robot.pneumatics.report()
     }
 
     override fun isFinished() = false

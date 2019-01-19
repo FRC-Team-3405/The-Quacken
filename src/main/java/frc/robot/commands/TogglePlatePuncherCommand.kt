@@ -11,7 +11,7 @@ class TogglePlatePuncherCommand: Command() {
 
     override fun execute() {
         println("Toggling plate puncher...")
-        Robot.pneumatics.platePuncher.toggleState()
+       // Robot.pneumatics.platePuncher.toggleState()
     }
 
     override fun isFinished() = true

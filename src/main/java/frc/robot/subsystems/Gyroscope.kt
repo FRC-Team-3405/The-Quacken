@@ -8,12 +8,12 @@ import frc.robot.utilties.ReportableSubsystem
 
 class Gyroscope: Subsystem(), ReportableSubsystem {
 
-    private val gyroscope = AnalogGyro(1)
+   //  private val gyroscope = AnalogGyro(1)
 
     override fun initDefaultCommand() {
         defaultCommand = RunGyroscopeCommand()
     }
-
+/* 
     fun initGryo() {
         gyroscope.initGyro()
     }
@@ -32,6 +32,6 @@ class Gyroscope: Subsystem(), ReportableSubsystem {
         SmartDashboard.putNumber("gyro_rate", gyroscope.rate)
         SmartDashboard.putNumber("gyro_pid", gyroscope.pidGet())
         SmartDashboard.putNumber("gyro_center", gyroscope.center.toDouble())
-    }
+    } */
 
 }

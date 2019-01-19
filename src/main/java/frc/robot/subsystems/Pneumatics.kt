@@ -17,19 +17,19 @@ enum class PneumaticState(val kDirection: DoubleSolenoid.Value) {
 
 class Pneumatics: Subsystem(), ReportableSubsystem {
 
-    private val compressor = Compressor(0)
-    private val pressureSensor = AnalogInput(0)
+   // private val compressor = Compressor(0)
+    //private val pressureSensor = AnalogInput(0)
 
-    val shifter = TwoStatePneumatic(DoubleSolenoid(5, 4), "shifter")
-    val plateGrabber = TwoStatePneumatic(DoubleSolenoid(3, 2), "plategrabber")
-    val platePuncher = TwoStatePneumatic(DoubleSolenoid(1, 0), "platepuncher")
+    //val shifter = TwoStatePneumatic(DoubleSolenoid(5, 4), "shifter")
+    //val plateGrabber = TwoStatePneumatic(DoubleSolenoid(3, 2), "plategrabber")
+    //val platePuncher = TwoStatePneumatic(DoubleSolenoid(1, 0), "platepuncher")
 
     override fun initDefaultCommand() {
         compressor.enabled()
         defaultCommand = RunPneumaticsCommand()
     }
 
-
+/* 
     //TODO test these functions
     fun shiftUp() {
         shifter.setState(PneumaticState.FORWARD)
@@ -56,5 +56,6 @@ class Pneumatics: Subsystem(), ReportableSubsystem {
             return 250 * (voltage / SENSOR_VOLTAGE) - 25
         }
     }
+    */
 
 }
