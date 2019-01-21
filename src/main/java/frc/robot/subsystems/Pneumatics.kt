@@ -30,13 +30,12 @@ class Pneumatics: Subsystem(), ReportableSubsystem {
     }
 
 
-    //TODO test these functions
     fun shiftUp() {
-        shifter.setState(PneumaticState.FORWARD)
+        shifter.setState(PneumaticState.BACKWARD)
     }
 
     fun shiftDown() {
-        shifter.setState(PneumaticState.BACKWARD)
+        shifter.setState(PneumaticState.FORWARD)
     }
 
     override fun report() {
