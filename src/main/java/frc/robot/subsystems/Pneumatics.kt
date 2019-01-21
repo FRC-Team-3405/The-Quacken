@@ -25,7 +25,7 @@ class Pneumatics: Subsystem(), ReportableSubsystem {
     //val platePuncher = TwoStatePneumatic(DoubleSolenoid(1, 0), "platepuncher")
 
     override fun initDefaultCommand() {
-        compressor.enabled()
+//        compressor.enabled()
         defaultCommand = RunPneumaticsCommand()
     }
 
@@ -38,15 +38,15 @@ class Pneumatics: Subsystem(), ReportableSubsystem {
     fun shiftDown() {
         shifter.setState(PneumaticState.BACKWARD)
     }
-
+*/
     override fun report() {
-        SmartDashboard.putString("plategrabber_direction", plateGrabber.solenoidState.toString())
-        SmartDashboard.putString("platepuncher_direction", platePuncher.solenoidState.toString())
-        SmartDashboard.putString("shifter_direction", shifter.solenoidState.toString())
-        SmartDashboard.putBoolean("compressor_pressureswitchvalue", compressor.pressureSwitchValue)
-
-        SmartDashboard.putNumber("Analog Pressure Sensor Voltage", pressureSensor.voltage)
-        SmartDashboard.putNumber("~Pressure (PSI)", analogToUnitPSI(pressureSensor.voltage))
+//        SmartDashboard.putString("plategrabber_direction", plateGrabber.solenoidState.toString())
+//        SmartDashboard.putString("platepuncher_direction", platePuncher.solenoidState.toString())
+//        SmartDashboard.putString("shifter_direction", shifter.solenoidState.toString())
+//        SmartDashboard.putBoolean("compressor_pressureswitchvalue", compressor.pressureSwitchValue)
+//
+//        SmartDashboard.putNumber("Analog Pressure Sensor Voltage", pressureSensor.voltage)
+//        SmartDashboard.putNumber("~Pressure (PSI)", analogToUnitPSI(pressureSensor.voltage))
 
     }
 
@@ -56,6 +56,6 @@ class Pneumatics: Subsystem(), ReportableSubsystem {
             return 250 * (voltage / SENSOR_VOLTAGE) - 25
         }
     }
-    */
+
 
 }

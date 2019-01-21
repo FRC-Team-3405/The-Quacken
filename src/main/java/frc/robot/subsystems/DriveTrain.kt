@@ -1,15 +1,14 @@
 package frc.robot.subsystems
 
+import com.ctre.phoenix.motorcontrol.ControlMode
+import edu.wpi.first.wpilibj.Talon
 import edu.wpi.first.wpilibj.command.Subsystem
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
 import frc.robot.commands.runners.RunDriveTrainCommand
 import frc.robot.utilties.ReportableSubsystem
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.Talon
 
-const val MAX_SPEED = 0.7
+const val MAX_SPEED = 0.5
 
 enum class Side {
     LEFT, RIGHT
@@ -67,12 +66,12 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
     private fun driveSide(side: Side, power: Double) {
         when(side) {
             Side.LEFT -> {
-               frontLeft.set(ControlMode.PercentOutput, power * direction.sign)
-               backLeft.set(ControlMode.PercentOutput, power * direction.sign)
+               frontLeft.set(power * -direction.sign)
+               backLeft.set(power * -direction.sign)
             }
             Side.RIGHT -> {
-               frontRight.set(ControlMode.PercentOutput, power * -direction.sign)
-               backRight.set(ControlMode.PercentOutput, power * -direction.sign)
+               frontRight.set(power * direction.sign)
+               backRight.set(power * direction.sign)
             }
         }
     }

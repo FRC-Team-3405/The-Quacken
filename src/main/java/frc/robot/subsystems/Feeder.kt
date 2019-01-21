@@ -28,12 +28,12 @@ class Feeder: Subsystem(), ReportableSubsystem {
                 feederMotor.set(0.0)
             }
         }
-    }
+    }*/
 
     override fun report() {
-        SmartDashboard.putString("pov", Robot.joystick.povController.toString())
-        SmartDashboard.putBoolean("feedermotor_isalive", feederMotor.isAlive)
-        SmartDashboard.putBoolean("feedermotor_safetyenabled", feederMotor.isSafetyEnabled)
-    } */
+//        SmartDashboard.putString("pov", Robot.joystick.povController.toString())
+//        SmartDashboard.putBoolean("feedermotor_isalive", feederMotor.isAlive)
+//        SmartDashboard.putBoolean("feedermotor_safetyenabled", feederMotor.isSafetyEnabled)
+    }
 
 }

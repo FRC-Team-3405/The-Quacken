@@ -24,14 +24,14 @@ class Gyroscope: Subsystem(), ReportableSubsystem {
 
     fun reset() {
         gyroscope.reset()
-    }
+    }*/
 
     override fun report() {
-        SmartDashboard.putNumber("gyro_angle", gyroscope.angle)
-        SmartDashboard.putNumber("gyro_offset", gyroscope.offset)
-        SmartDashboard.putNumber("gyro_rate", gyroscope.rate)
-        SmartDashboard.putNumber("gyro_pid", gyroscope.pidGet())
-        SmartDashboard.putNumber("gyro_center", gyroscope.center.toDouble())
-    } */
+//        SmartDashboard.putNumber("gyro_angle", gyroscope.angle)
+//        SmartDashboard.putNumber("gyro_offset", gyroscope.offset)
+//        SmartDashboard.putNumber("gyro_rate", gyroscope.rate)
+//        SmartDashboard.putNumber("gyro_pid", gyroscope.pidGet())
+//        SmartDashboard.putNumber("gyro_center", gyroscope.center.toDouble())
+    }
 
 }

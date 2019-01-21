@@ -41,10 +41,10 @@ class Robot : TimedRobot() {
 
         GlobalScope.launch {
             val usbCamera = CameraServer.getInstance().startAutomaticCapture()
-            val axisCamera = CameraServer.getInstance().addAxisCamera("axis-camera.local")
+//            val axisCamera = CameraServer.getInstance().addAxisCamera("axis-camera.local")
 
             usbCamera.setResolution(640, 480)
-            axisCamera.setResolution(640, 480)
+//            axisCamera.setResolution(640, 480)
         }
     }
 
@@ -77,8 +77,8 @@ class Robot : TimedRobot() {
         autoSelected = mchooser.selected
         // autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
         println("Auto selected: " + autoSelected!!)
-        gyroscope.initGryo()
-        gyroscope.reset()
+//        gyroscope.initGryo()
+//        gyroscope.reset()
     }
 
     /**
@@ -102,8 +102,8 @@ class Robot : TimedRobot() {
      * This function is run when teleop is first started.
      */
     override fun teleopInit() {
-        gyroscope.initGryo()
-        gyroscope.reset()
+//        gyroscope.initGryo()
+//        gyroscope.reset()
 
 
         println("Registering buttons!")
