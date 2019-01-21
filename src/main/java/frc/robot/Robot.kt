@@ -109,7 +109,7 @@ class Robot : TimedRobot() {
         println("Registering buttons!")
         //Register button presses
         joystick.AButton.whenPressed(SwitchDirectionCommand())
-        //BButton
+        joystick.BButton.whenPressed(ReleaseThePlateCommand())
         joystick.XButton.whenPressed(TogglePlatePuncherCommand())
         joystick.YButton.whenPressed(TogglePlateGrabberCommand())
         joystick.LeftBumperButton.whenPressed(ShiftDownCommand())

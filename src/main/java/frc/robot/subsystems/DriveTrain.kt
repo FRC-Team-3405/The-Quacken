@@ -51,8 +51,14 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         val leftOutput = leftY * maxOutput
         val rightOutput = rightY * maxOutput
 
-        driveSide(Side.LEFT, leftOutput)
-        driveSide(Side.RIGHT, rightOutput)
+        if(direction == Direction.FORWARD) {
+            driveSide(Side.LEFT, leftOutput)
+            driveSide(Side.RIGHT, rightOutput)
+        } else {
+            //This is how it is supposed to be.
+            driveSide(Side.RIGHT, leftOutput)
+            driveSide(Side.LEFT, rightOutput)
+        }
 
     }
 
