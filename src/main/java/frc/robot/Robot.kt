@@ -27,6 +27,8 @@ import kotlinx.coroutines.launch
  * project.
  */
 class Robot : TimedRobot() {
+    //Magic number: 5740.013  (d = 5740.013/Tpx)
+
     private var autoSelected: String? = null
     private val mchooser = SendableChooser<String>()
 
