@@ -8,6 +8,7 @@
 package frc.robot
 
 import edu.wpi.first.cameraserver.CameraServer
+import edu.wpi.first.networktables.NetworkTable
 import edu.wpi.first.wpilibj.Joystick
 import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.command.Scheduler
@@ -47,6 +48,10 @@ class Robot : TimedRobot() {
 
             usbCamera.setResolution(640, 480)
             axisCamera.setResolution(640, 480)
+
+            while(true) {
+                println(NetworkTable.getHierarchy("contours"))
+            }
         }
     }
 
