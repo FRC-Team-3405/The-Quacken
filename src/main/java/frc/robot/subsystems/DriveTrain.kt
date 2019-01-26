@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode
 import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration
+import kotlin.math.PI
 
 const val MAX_SPEED = 0.7
 
@@ -34,6 +35,7 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
 
         backRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
         backLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
+
         backRight.inverted = true
         frontRight.inverted = true
     }
@@ -48,6 +50,10 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         //Encoder stuff
         SmartDashboard.putNumber("right_encoder_count", backRight.selectedSensorPosition.toDouble())
         SmartDashboard.putNumber("left_encoder_count", backLeft.selectedSensorPosition.toDouble())
+
+        //Rotation values
+        SmartDashboard.putNumber("right_encoder_rotations", backRight.selectedSensorPosition / 1440.0)
+        SmartDashboard.putNumber("left_encoder_rotations", backLeft.selectedSensorPosition / 1440.0)
 
         //Motor temperature
         SmartDashboard.putNumber("back_right_talon_temp", backRight.temperature)
@@ -74,7 +80,17 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         SmartDashboard.putNumber("front_right_voltage", frontRight.motorOutputVoltage)
     }
 
+    fun resetEncoderCounts() {
+        backRight.selectedSensorPosition = 0
+        backLeft.selectedSensorPosition = 0
+    }
+
     fun tankDrive() {
+        if(Robot.joystick.ElevenButton.get()) {
+            driveStraight()
+            return
+        }
+
         val leftY = Robot.joystick.leftY * MAX_SPEED
         val rightY = Robot.joystick.rightY * MAX_SPEED
 
@@ -89,14 +105,11 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         val rightOutput = rightY * maxOutput
 
         if(direction == Direction.FORWARD) {
-            driveSide(Side.LEFT, leftOutput)
-            driveSide(Side.RIGHT, rightOutput)
+            driveSide(powerLeft = leftOutput, powerRight = rightOutput)
         } else {
             //This is how it is supposed to be.
-            driveSide(Side.RIGHT, leftOutput)
-            driveSide(Side.LEFT, rightOutput)
+            driveSide(powerLeft = rightOutput, powerRight = leftOutput)
         }
-
     }
 
     fun switchDirection() {
@@ -106,17 +119,29 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         }
     }
 
-    private fun driveSide(side: Side, power: Double) {
-        when(side) {
-            Side.LEFT -> {
-               frontLeft.set(ControlMode.PercentOutput, power * direction.sign)
-               backLeft.set(ControlMode.PercentOutput, power * direction.sign)
-            }
-            Side.RIGHT -> {
-               frontRight.set(ControlMode.PercentOutput, power * direction.sign)
-               backRight.set(ControlMode.PercentOutput, power * direction.sign)
-            }
-        }
+    private fun driveSide(powerLeft: Double, powerRight: Double) {
+        //Left
+        frontLeft.set(ControlMode.PercentOutput, powerLeft * direction.sign)
+        backLeft.set(ControlMode.PercentOutput, powerLeft * direction.sign)
+
+        //Right
+        frontRight.set(ControlMode.PercentOutput, powerRight * direction.sign)
+        backRight.set(ControlMode.PercentOutput, powerRight * direction.sign)
+    }
+
+    private fun driveAngle(power: Double, angle: Double) {
+        val left = power + (angle / PI)
+        val right = power - (angle / PI)
+
+        driveSide(left, right)
+    }
+
+    fun driveStraight() {
+        val error = backRight.selectedSensorPosition - backLeft.selectedSensorPosition
+        resetEncoderCounts()
+        val turnPower = 0.00001 * error
+        println(turnPower)
+        driveAngle(MAX_SPEED * 0.75, turnPower)
     }
 
 }

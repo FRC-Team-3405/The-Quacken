@@ -84,6 +84,7 @@ class Robot : TimedRobot() {
         println("Auto selected: " + autoSelected!!)
         gyroscope.initGryo()
         gyroscope.reset()
+        driveTrain.resetEncoderCounts()
     }
 
     /**
@@ -109,6 +110,8 @@ class Robot : TimedRobot() {
     override fun teleopInit() {
         gyroscope.initGryo()
         gyroscope.reset()
+
+        driveTrain.resetEncoderCounts()
 
 
         println("Registering buttons!")
