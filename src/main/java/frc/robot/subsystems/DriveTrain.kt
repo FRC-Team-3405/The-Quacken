@@ -34,6 +34,8 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
 
         backRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
         backLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
+        backRight.inverted = true
+        frontRight.inverted = true
     }
 
     override fun report() {
@@ -111,8 +113,8 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
                backLeft.set(ControlMode.PercentOutput, power * direction.sign)
             }
             Side.RIGHT -> {
-               frontRight.set(ControlMode.PercentOutput, power * -direction.sign)
-               backRight.set(ControlMode.PercentOutput, power * -direction.sign)
+               frontRight.set(ControlMode.PercentOutput, power * direction.sign)
+               backRight.set(ControlMode.PercentOutput, power * direction.sign)
             }
         }
     }

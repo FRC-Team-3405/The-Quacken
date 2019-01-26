@@ -64,7 +64,6 @@ class Robot : TimedRobot() {
      */
     override fun robotPeriodic() {
         SmartDashboard.updateValues()
-        println(NetworkTableInstance.getDefault().getEntries("GRIP", NetworkTableType.kDoubleArray.value).size)
     }
 
     /**
