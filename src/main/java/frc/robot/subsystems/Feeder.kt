@@ -8,6 +8,8 @@ import frc.robot.commands.runners.RunFeederCommand
 import frc.robot.maps.XboxMap
 import frc.robot.utilties.ReportableSubsystem
 
+const val FEEDER_MAX_SPEED = 0.5
+
 class Feeder: Subsystem(), ReportableSubsystem {
 
     private val feederMotor = Spark(0)
@@ -19,10 +21,10 @@ class Feeder: Subsystem(), ReportableSubsystem {
     fun runFeeder() {
         when(Robot.joystick.povController) {
             XboxMap.PovDirections.UP -> {
-                feederMotor.set(-MAX_SPEED)
+                feederMotor.set(-FEEDER_MAX_SPEED)
             }
             XboxMap.PovDirections.DOWN -> {
-                feederMotor.set(MAX_SPEED)
+                feederMotor.set(FEEDER_MAX_SPEED)
             }
             else -> {
                 feederMotor.set(0.0)
