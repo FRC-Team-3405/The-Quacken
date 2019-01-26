@@ -5,8 +5,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
 import frc.robot.commands.runners.RunDriveTrainCommand
 import frc.robot.utilties.ReportableSubsystem
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode
+import com.ctre.phoenix.motorcontrol.FeedbackDevice
+import com.ctre.phoenix.motorcontrol.can.TalonSRX
+import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration
 
 const val MAX_SPEED = 0.7
 
@@ -29,12 +31,45 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
 
     override fun initDefaultCommand() {
         defaultCommand = RunDriveTrainCommand()
+
+        backRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
+        backLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
     }
 
     override fun report() {
+        //Motor direction (possibly replace with motor inversion?)
         SmartDashboard.putNumber("direction", direction.sign.toDouble())
+
+        //Software-set max speed TODO add a slider on Shuffleboard to configure
         SmartDashboard.putNumber("max_speed", MAX_SPEED)
-        //TODO add more motor stuff once those libraries are installed.
+
+        //Encoder stuff
+        SmartDashboard.putNumber("right_encoder_count", backRight.selectedSensorPosition.toDouble())
+        SmartDashboard.putNumber("left_encoder_count", backLeft.selectedSensorPosition.toDouble())
+
+        //Motor temperature
+        SmartDashboard.putNumber("back_right_talon_temp", backRight.temperature)
+        SmartDashboard.putNumber("back_left_talon_temp", backLeft.temperature)
+        SmartDashboard.putNumber("front_left_talon_temp", frontLeft.temperature)
+        SmartDashboard.putNumber("front_right_talon_temp", frontRight.temperature)
+
+        //Motor inversions
+        SmartDashboard.putBoolean("back_right_inverted", backRight.inverted)
+        SmartDashboard.putBoolean("back_left_inverted", backLeft.inverted)
+        SmartDashboard.putBoolean("front_left_inverted", frontLeft.inverted)
+        SmartDashboard.putBoolean("front_right_inverted", frontRight.inverted)
+
+        //Motor current
+        SmartDashboard.putNumber("back_right_current", backRight.outputCurrent)
+        SmartDashboard.putNumber("back_left_current", backLeft.outputCurrent)
+        SmartDashboard.putNumber("front_left_current", frontLeft.outputCurrent)
+        SmartDashboard.putNumber("front_right_current", frontRight.outputCurrent)
+
+        //Motor voltage
+        SmartDashboard.putNumber("back_right_voltage", backRight.motorOutputVoltage)
+        SmartDashboard.putNumber("back_left_voltage", backLeft.motorOutputVoltage)
+        SmartDashboard.putNumber("front_left_voltage", frontLeft.motorOutputVoltage)
+        SmartDashboard.putNumber("front_right_voltage", frontRight.motorOutputVoltage)
     }
 
     fun tankDrive() {
