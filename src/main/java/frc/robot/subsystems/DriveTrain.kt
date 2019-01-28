@@ -1,17 +1,16 @@
 package frc.robot.subsystems
 
+import com.ctre.phoenix.motorcontrol.ControlMode
+import com.ctre.phoenix.motorcontrol.FeedbackDevice
+import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import edu.wpi.first.wpilibj.command.Subsystem
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
 import frc.robot.commands.runners.RunDriveTrainCommand
 import frc.robot.utilties.ReportableSubsystem
-import com.ctre.phoenix.motorcontrol.ControlMode
-import com.ctre.phoenix.motorcontrol.FeedbackDevice
-import com.ctre.phoenix.motorcontrol.can.TalonSRX
-import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration
-import kotlin.math.PI
 
 const val MAX_SPEED = 0.7
+const val kP = 0.003
 
 enum class Side {
     LEFT, RIGHT
@@ -129,18 +128,38 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         backRight.set(ControlMode.PercentOutput, powerRight * direction.sign)
     }
 
-    private fun driveAngle(power: Double, angle: Double) {
-        val left = power + (angle / PI)
-        val right = power - (angle / PI)
+    private fun driveAngle(power: Double, turnPower: Double) {
+        var left: Double
+        var right: Double
 
+        if(power > 0) {
+            if(turnPower > 0) {
+                left = power - turnPower
+                right = Math.max(power, turnPower)
+            } else {
+                left = Math.max(power, -turnPower)
+                right = power + turnPower
+            }
+        } else {
+            if(turnPower > 0) {
+                left = -Math.max(-power, turnPower)
+                right = power + turnPower
+            } else {
+                left = power - turnPower
+                right = -Math.max(-power, -turnPower)
+            }
+        }
+
+        println("Left: $left, Right: $right")
         driveSide(left, right)
     }
 
     fun driveStraight() {
-        val error = backRight.selectedSensorPosition - backLeft.selectedSensorPosition
+        val error = backLeft.selectedSensorPosition - backRight.selectedSensorPosition
+        println("Left Encoder: ${backLeft.selectedSensorPosition}, Right Encoder: ${backRight.selectedSensorPosition}")
         resetEncoderCounts()
-        val turnPower = 0.00001 * error
-        println(turnPower)
+        val turnPower = kP * error
+        println("Error: $error")
         driveAngle(MAX_SPEED * 0.75, turnPower)
     }
 
