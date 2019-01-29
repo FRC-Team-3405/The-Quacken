@@ -1,20 +1,12 @@
 package frc.robot.subsystems
 
-import com.ctre.phoenix.motorcontrol.ControlMode
-import com.ctre.phoenix.motorcontrol.FeedbackDevice
+import com.ctre.phoenix.motorcontrol.*
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import edu.wpi.first.wpilibj.command.Subsystem
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
 import frc.robot.commands.runners.RunDriveTrainCommand
-import frc.robot.utilties.ReportableSubsystem
-
-const val MAX_SPEED = 0.7
-const val kP = 0.003
-
-enum class Side {
-    LEFT, RIGHT
-}
+import frc.robot.utilities.*
 
 enum class Direction(val sign: Int) {
     FORWARD(1),
@@ -25,22 +17,118 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
 
     private val frontRight = TalonSRX(0) //Right Bottom
     private val frontLeft = TalonSRX(1) //Left Top
-    private val backLeft = TalonSRX(2) //Left Bottom
-    private val backRight = TalonSRX(3) //Right Top
+    private val backLeft = TalonSRX(2) //Left Bottom (MASTER)
+    private val backRight = TalonSRX(3) //Right Top (MASTER)
+
     var direction = Direction.FORWARD
+
+    var heading = 0.0
 
     override fun initDefaultCommand() {
         defaultCommand = RunDriveTrainCommand()
 
-        backRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
-        backLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
+//        backRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
+//        backLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder)
 
+        //Follow masters
+        frontRight.follow(backRight)
+        frontLeft.follow(backLeft)
+
+        //Disable motor controllers
+        backLeft.set(ControlMode.PercentOutput, 0.0)
+        backRight.set(ControlMode.PercentOutput, 0.0)
+
+        //Set neutral mode
+        backLeft.setNeutralMode(NeutralMode.Brake)
+        backRight.setNeutralMode(NeutralMode.Brake)
+
+        //Set up quadrature encoder
+        backLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_PRIMARY, TIMEOUT_MS)
+        //Set up left Talon sensor as remote for right Talon
+        backRight.configRemoteFeedbackFilter(backLeft.deviceID, RemoteSensorSource.TalonSRX_SelectedSensor, REMOTE_0, TIMEOUT_MS)
+
+        //Setting up the difference signal used for turning when driving straight
+        backRight.configSensorTerm(SensorTerm.Diff1, FeedbackDevice.RemoteSensor0, TIMEOUT_MS)
+        backRight.configSensorTerm(SensorTerm.Diff0, FeedbackDevice.QuadEncoder, TIMEOUT_MS)
+
+        //Makes the difference between the two sensors the PID of turning (while going straight)
+        backRight.configSelectedFeedbackSensor(FeedbackDevice.SensorDifference, PID_TURN, TIMEOUT_MS)
+
+        //Scales the error by a coefficient calculated here:
+        /**
+         * Heading units should be scaled to ~4000 per 360 deg, due to the following limitations...
+         * - Target param for aux PID1 is 18bits with a range of [-131072,+131072] units.
+         * - Target for aux PID1 in motion profile is 14bits with a range of [-8192,+8192] units.
+         *  ... so at 3600 units per 360', that ensures 0.1 degree precision in firmware closed-loop
+         *  and motion profile trajectory points can range +-2 rotations.
+         */
+        backRight.configSelectedFeedbackCoefficient(TURN_TRAVEL_UNITS_PER_ROTATION / ENCODER_UNITS_PER_ROTATION, PID_TURN, TIMEOUT_MS)
+
+        //Configure output and sensor direction
+        backLeft.inverted = false
+        backLeft.setSensorPhase(true)
         backRight.inverted = true
-        frontRight.inverted = true
+        backRight.setSensorPhase(true)
+
+        //Set status frame periods
+        backRight.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, TIMEOUT_MS)
+        backRight.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 20, TIMEOUT_MS)
+        backLeft.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, TIMEOUT_MS) //Used remotely by right Talon, speed up
+
+        //Configure neutral deadband
+        backRight.configNeutralDeadband(NEUTRAL_DEADBAND, TIMEOUT_MS)
+        backLeft.configNeutralDeadband(NEUTRAL_DEADBAND, TIMEOUT_MS)
+
+        //Set the peak outputs
+        backLeft.configPeakOutputForward(+1.0, TIMEOUT_MS)
+        backLeft.configPeakOutputReverse(-1.0, TIMEOUT_MS)
+        backRight.configPeakOutputForward(+1.0, TIMEOUT_MS)
+        backRight.configPeakOutputReverse(-1.0, TIMEOUT_MS)
+
+        //FPID Gains for turn servo
+        backRight.config_kP(SLOT_TURNING, GAINS_TURNING.kP, TIMEOUT_MS)
+        backRight.config_kI(SLOT_TURNING, GAINS_TURNING.kI, TIMEOUT_MS)
+        backRight.config_kD(SLOT_TURNING, GAINS_TURNING.kD, TIMEOUT_MS)
+        backRight.config_kF(SLOT_TURNING, GAINS_TURNING.kF, TIMEOUT_MS)
+        backRight.config_IntegralZone(SLOT_TURNING, GAINS_TURNING.kIZone, TIMEOUT_MS)
+        backRight.configClosedLoopPeakOutput(SLOT_TURNING, GAINS_TURNING.kPeakOutput, TIMEOUT_MS)
+        backRight.configAllowableClosedloopError(SLOT_TURNING, 0, TIMEOUT_MS)
+
+        /* 1ms per loop.  PID loop can be slowed down if need be.
+		 * For example,
+		 * - if sensor updates are too slow
+		 * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
+		 * - sensor movement is very slow causing the derivative error to be near zero.
+		 */
+        val closedLoopTimeMs = 1
+        backRight.configClosedLoopPeriod(0, closedLoopTimeMs, TIMEOUT_MS)
+        backRight.configClosedLoopPeriod(1, closedLoopTimeMs, TIMEOUT_MS)
+
+        /* configAuxPIDPolarity(boolean invert, int timeoutMs)
+		 * false means talon's local output is PID0 + PID1, and other side Talon is PID0 - PID1
+		 * true means talon's local output is PID0 - PID1, and other side Talon is PID0 + PID1
+		 */
+        backRight.configAuxPIDPolarity(false, TIMEOUT_MS)
+
+        //Initialize
+        resetEncoderCounts()
+        Robot.joystick.ElevenButton.onPressed {
+            println("This is Drive Straight using the auxiliary feature with the difference between two encoders to maintain current heading.")
+
+            //Determine which slot affects which PID
+            backRight.selectProfileSlot(SLOT_TURNING, PID_TURN)
+
+            heading = backRight.getSelectedSensorPosition(1).toDouble()
+        }
+
+        Robot.joystick.NineButton.onPressed {
+            resetEncoderCounts()
+        }
+
     }
 
     override fun report() {
-        //Motor direction (possibly replace with motor inversion?)
+        //Robot direction
         SmartDashboard.putNumber("direction", direction.sign.toDouble())
 
         //Software-set max speed TODO add a slider on Shuffleboard to configure
@@ -80,8 +168,8 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
     }
 
     fun resetEncoderCounts() {
-        backRight.selectedSensorPosition = 0
-        backLeft.selectedSensorPosition = 0
+        backLeft.sensorCollection.setQuadraturePosition(0, TIMEOUT_MS)
+        backRight.sensorCollection.setQuadraturePosition(0, TIMEOUT_MS)
     }
 
     fun tankDrive() {
@@ -93,21 +181,11 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         val leftY = Robot.joystick.leftY * MAX_SPEED
         val rightY = Robot.joystick.rightY * MAX_SPEED
 
-        var maxOutput = 0.9
-        if(Robot.joystick.RightLowerBumperButton.get()) {
-            maxOutput += .1
-        } else if(Robot.joystick.LeftLowerBumperButton.get()) {
-            maxOutput -= .3
-        }
-
-        val leftOutput = leftY * maxOutput
-        val rightOutput = rightY * maxOutput
-
         if(direction == Direction.FORWARD) {
-            driveSide(powerLeft = leftOutput, powerRight = rightOutput)
+            driveSide(powerLeft = leftY, powerRight = rightY)
         } else {
             //This is how it is supposed to be.
-            driveSide(powerLeft = rightOutput, powerRight = leftOutput)
+            driveSide(powerLeft = rightY, powerRight = leftY)
         }
     }
 
@@ -119,18 +197,15 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
     }
 
     private fun driveSide(powerLeft: Double, powerRight: Double) {
-        //Left
-        frontLeft.set(ControlMode.PercentOutput, powerLeft * direction.sign)
         backLeft.set(ControlMode.PercentOutput, powerLeft * direction.sign)
-
-        //Right
-        frontRight.set(ControlMode.PercentOutput, powerRight * direction.sign)
         backRight.set(ControlMode.PercentOutput, powerRight * direction.sign)
+        frontLeft.follow(backLeft)
+        frontRight.follow(backRight)
     }
 
     private fun driveAngle(power: Double, turnPower: Double) {
-        var left: Double
-        var right: Double
+        val left: Double
+        val right: Double
 
         if(power > 0) {
             if(turnPower > 0) {
@@ -155,12 +230,8 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
     }
 
     fun driveStraight() {
-        val error = backLeft.selectedSensorPosition - backRight.selectedSensorPosition
-        println("Left Encoder: ${backLeft.selectedSensorPosition}, Right Encoder: ${backRight.selectedSensorPosition}")
-        resetEncoderCounts()
-        val turnPower = kP * error
-        println("Error: $error")
-        driveAngle(MAX_SPEED * 0.75, turnPower)
+        backRight.set(ControlMode.PercentOutput, MAX_SPEED, DemandType.AuxPID, heading)
+        backLeft.follow(backRight, FollowerType.AuxOutput1)
     }
 
 }

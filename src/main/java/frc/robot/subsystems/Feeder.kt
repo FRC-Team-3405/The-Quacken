@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
 import frc.robot.commands.runners.RunFeederCommand
 import frc.robot.maps.XboxMap
-import frc.robot.utilties.ReportableSubsystem
+import frc.robot.utilities.ReportableSubsystem
 
 const val FEEDER_MAX_SPEED = 0.5
 

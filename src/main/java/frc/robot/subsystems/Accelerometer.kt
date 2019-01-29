@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer
 import edu.wpi.first.wpilibj.command.Subsystem
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.commands.runners.RunAccelerometerCommand
-import frc.robot.utilties.ReportableSubsystem
+import frc.robot.utilities.ReportableSubsystem
 
 class Accelerometer: Subsystem(), ReportableSubsystem {
 

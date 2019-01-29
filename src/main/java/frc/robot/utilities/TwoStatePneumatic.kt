@@ -1,4 +1,4 @@
-package frc.robot.utilties
+package frc.robot.utilities
 
 import edu.wpi.first.wpilibj.DoubleSolenoid
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard

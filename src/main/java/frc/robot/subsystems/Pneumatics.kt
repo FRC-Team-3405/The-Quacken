@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid
 import edu.wpi.first.wpilibj.command.Subsystem
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.commands.runners.RunPneumaticsCommand
-import frc.robot.utilties.ReportableSubsystem
-import frc.robot.utilties.TwoStatePneumatic
+import frc.robot.utilities.ReportableSubsystem
+import frc.robot.utilities.TwoStatePneumatic
 
 enum class PneumaticState(val kDirection: DoubleSolenoid.Value) {
     FORWARD(DoubleSolenoid.Value.kForward),
