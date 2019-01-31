@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
 import frc.robot.commands.runners.RunDriveTrainCommand
 import frc.robot.utilities.*
+import kotlin.math.PI
 
 enum class Direction(val sign: Int) {
     FORWARD(1),
@@ -21,6 +22,12 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
     private val backRight = TalonSRX(3) //Right Top (MASTER)
 
     var direction = Direction.FORWARD
+
+    var turning = false
+    var targetAngle = 0.0
+
+    var drivingDistance = false
+    var targetDistance = 0.0
 
     var heading = 0.0
 
@@ -68,6 +75,7 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         backLeft.inverted = false
         backLeft.setSensorPhase(true)
         backRight.inverted = true
+        frontRight.inverted = true
         backRight.setSensorPhase(true)
 
         //Set status frame periods
@@ -108,7 +116,7 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
 		 * false means talon's local output is PID0 + PID1, and other side Talon is PID0 - PID1
 		 * true means talon's local output is PID0 - PID1, and other side Talon is PID0 + PID1
 		 */
-        backRight.configAuxPIDPolarity(false, TIMEOUT_MS)
+        backRight.configAuxPIDPolarity(true, TIMEOUT_MS)
 
         //Initialize
         resetEncoderCounts()
@@ -122,7 +130,11 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         }
 
         Robot.joystick.NineButton.onPressed {
-            resetEncoderCounts()
+            driveDistance(36.0)
+        }
+
+        Robot.joystick.TenButton.onPressed {
+            turnAngle(90.0)
         }
 
     }
@@ -141,6 +153,8 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         //Rotation values
         SmartDashboard.putNumber("right_encoder_rotations", backRight.selectedSensorPosition / 1440.0)
         SmartDashboard.putNumber("left_encoder_rotations", backLeft.selectedSensorPosition / 1440.0)
+
+        SmartDashboard.putNumber("right_sensor_feedback", backRight.getSelectedSensorPosition(PID_TURN).toDouble())
 
         //Motor temperature
         SmartDashboard.putNumber("back_right_talon_temp", backRight.temperature)
@@ -165,6 +179,8 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         SmartDashboard.putNumber("back_left_voltage", backLeft.motorOutputVoltage)
         SmartDashboard.putNumber("front_left_voltage", frontLeft.motorOutputVoltage)
         SmartDashboard.putNumber("front_right_voltage", frontRight.motorOutputVoltage)
+
+        SmartDashboard.putNumber("heading", heading)
     }
 
     fun resetEncoderCounts() {
@@ -173,8 +189,34 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
     }
 
     fun tankDrive() {
+        if(turning) {
+            if(targetAngle > 0) {
+                SmartDashboard.putNumber("ROTATION", calculateRotation(Math.abs(backLeft.selectedSensorPosition - backRight.selectedSensorPosition).toDouble()))
+                if(calculateRotation(Math.abs(backLeft.selectedSensorPosition - backRight.selectedSensorPosition).toDouble()) + calculateRotation(Math.abs(backLeft.selectedSensorVelocity - backRight.selectedSensorVelocity).toDouble()) > targetAngle) {
+                    turning = false
+                } else {
+                    driveSide(-MAX_SPEED * 0.75, MAX_SPEED * 0.75)
+                    return
+                }
+            } else {
+                if(calculateRotation(Math.abs(backLeft.selectedSensorPosition - backRight.selectedSensorPosition).toDouble()) + calculateRotation(Math.abs(backLeft.selectedSensorVelocity - backRight.selectedSensorVelocity).toDouble()) < targetAngle) {
+                    turning = false
+                    driveSide(MAX_SPEED * 0.75, -MAX_SPEED * 0.75)
+                    return
+                }
+            }
+        }
+        if(drivingDistance) {
+            if(calculateDistance(Math.abs(backRight.selectedSensorPosition).toDouble()) + 1.5 * calculateDistance(Math.abs(backRight.selectedSensorVelocity).toDouble()) > targetDistance) {
+                drivingDistance = false
+            } else {
+                driveStraight(MAX_SPEED * direction.sign)
+                return
+            }
+        }
+
         if(Robot.joystick.ElevenButton.get()) {
-            driveStraight()
+            driveStraight(MAX_SPEED * direction.sign)
             return
         }
 
@@ -229,9 +271,29 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         driveSide(left, right)
     }
 
-    fun driveStraight() {
-        backRight.set(ControlMode.PercentOutput, MAX_SPEED, DemandType.AuxPID, heading)
+    fun driveStraight(power: Double) {
+        backRight.set(ControlMode.PercentOutput, power, DemandType.AuxPID, heading)
         backLeft.follow(backRight, FollowerType.AuxOutput1)
+    }
+
+    fun turnAngle(degrees: Double) {
+        resetEncoderCounts()
+        targetAngle = degrees
+        turning = true
+    }
+
+    fun calculateRotation(encoderDiff: Double): Double {
+        return (encoderDiff / ENCODER_UNITS_PER_ROTATION) * 360.0
+    }
+
+    fun calculateDistance(encoderUnits: Double): Double {
+        return (encoderUnits / 1440.0) * 6 * PI
+    }
+
+    fun driveDistance(inches: Double) {
+        resetEncoderCounts()
+        targetDistance = inches
+        drivingDistance = true
     }
 
 }

@@ -40,7 +40,7 @@ const val TURN_TRAVEL_UNITS_PER_ROTATION = 3600.0
  * Drive the robot in counter clockwise rotations and measure the units per rotation.
  * Take the average of the two.
  */
-const val ENCODER_UNITS_PER_ROTATION = 51711
+const val ENCODER_UNITS_PER_ROTATION = 9500 //Demo was 51711 WAS 10960 THEN 9500
 
 /**
  * Turning slot (Not entirely sure)
@@ -48,9 +48,9 @@ const val ENCODER_UNITS_PER_ROTATION = 51711
 const val SLOT_TURNING = 1
 
 /**
- * PID values for turning
+ * PID values for turning. May need to be adjusted. (kP should really be ~2, but our encoders are off and the motors so consistent, we're ignoring that for now)
  */
-val GAINS_TURNING = Gains(2.0, 0.0, 4.0, 0.0, 200, 1.00)
+val GAINS_TURNING = Gains(0.02, 0.0, 4.0, 0.0, 200, 1.00)
 
 
 data class Gains(val kP: Double, val kI: Double, val kD: Double, val kF: Double, val kIZone: Int, val kPeakOutput: Double)
