@@ -8,4 +8,12 @@ object RobotMap {
 
     //Drive
 
+    //Pneumatics
+
+    //Elevator
+
+    //Box
+
+    //Feeder
+
 }

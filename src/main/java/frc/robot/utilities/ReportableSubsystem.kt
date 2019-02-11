@@ -1,4 +1,4 @@
-package frc.robot.utilties
+package frc.robot.utilities
 
 interface ReportableSubsystem {
     fun report()
