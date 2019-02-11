@@ -188,7 +188,7 @@ class DriveTrain: Subsystem(), ReportableSubsystem {
         backRight.sensorCollection.setQuadraturePosition(0, TIMEOUT_MS)
     }
 
-    fun tankDrive() {
+    fun drive() {
         if(turning) {
             if(targetAngle > 0) {
                 SmartDashboard.putNumber("ROTATION", calculateRotation(Math.abs(backLeft.selectedSensorPosition - backRight.selectedSensorPosition).toDouble()))
