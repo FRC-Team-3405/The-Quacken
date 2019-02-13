@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.command.Scheduler
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
+import frc.robot.maps.JoystickMap
 import frc.robot.maps.RobotMap.MAIN_JOYSTICK_PORT
+import frc.robot.maps.RobotMap.SECONDARY_JOYSTICK_PORT
 import frc.robot.maps.XboxMap
 import frc.robot.subsystems.*
 
@@ -105,7 +107,7 @@ class Robot : TimedRobot() {
     }
 
     /**
-     * Static members of the robot (`Subsystems`)
+     * Static members of the robot (Subsystems)
      */
     companion object {
         private const val kDefaultAuto = "Default"
@@ -113,24 +115,26 @@ class Robot : TimedRobot() {
 
         //Control Joysticks
         val joystick = XboxMap.Controller(Joystick(MAIN_JOYSTICK_PORT))
+        val secondaryJoystick = JoystickMap.Controller(Joystick(SECONDARY_JOYSTICK_PORT))
 
         //Drive subsystems
         val driveTrain = DriveTrain()
 
         //Sensor subsystems
         val builtInAccelerometer = Accelerometer()
+//        val gyroscope = Gyroscope()
 
         //Pneumatics subsystems
-        val pneumatics  = Pneumatics()
+//        val pneumatics  = Pneumatics()
 
         //Elevator subsystems
-        val elevator = Elevator()
+//        val elevator = Elevator()
 
         //Box subsystems
-        val box = Box()
+//        val box = Box()
 
         //Feeder subsystems
-        val feeder = Feeder()
+//        val feeder = Feeder()
 
         //Autonomous Control Subsystem
         val autonomousControl = AutonomousControl()
