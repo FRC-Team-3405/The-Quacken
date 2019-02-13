@@ -3,10 +3,9 @@ package frc.robot.commands.runners
 import frc.robot.Robot
 import frc.robot.utilities.RunnerCommand
 
-class RunDriveTrainCommand: RunnerCommand(Robot.driveTrain) {
+class RunFeederCommand: RunnerCommand(Robot.feeder) {
     override fun execute() {
-        Robot.driveTrain.drive()
-
         super.execute()
+        Robot.feeder.runFeeder()
     }
 }

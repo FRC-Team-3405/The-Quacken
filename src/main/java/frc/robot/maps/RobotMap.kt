@@ -2,6 +2,9 @@ package frc.robot.maps
 
 object RobotMap {
 
+    //Joysticks
+    const val MAIN_JOYSTICK_PORT = 0
+
     //Sensors
 
     //Cameras
@@ -22,6 +25,6 @@ object RobotMap {
 
 
     //Feeder
-
+    const val FEEDER_MOTOR_PORT = 0
 
 }

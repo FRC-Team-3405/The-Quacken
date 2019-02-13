@@ -15,7 +15,7 @@ import frc.robot.utilities.ReportableSubsystem
 import frc.robot.utilities.configGains
 import kotlin.math.PI
 
-class DriveTrain: Subsystem(), ReportableSubsystem {
+class DriveTrain: ReportableSubsystem() {
 
     private val frontRight = TalonSRX(FR_TALONSRX)
     private val frontLeft = TalonSRX(FL_TALONSRX)

@@ -1,5 +1,7 @@
 package frc.robot.utilities
 
-interface ReportableSubsystem {
-    fun report()
+import edu.wpi.first.wpilibj.command.Subsystem
+
+abstract class ReportableSubsystem: Subsystem() {
+    abstract fun report()
 }

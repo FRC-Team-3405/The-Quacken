@@ -1,11 +1,6 @@
 package frc.robot.maps
 
 /**
- * The port of the main joystick (typically a XBox controller)
- */
-const val MAIN_JOYSTICK_PORT = 0
-
-/**
  * Maximum motor controller output percentage
  */
 const val MAX_MOTOR_SPEED = 0.7

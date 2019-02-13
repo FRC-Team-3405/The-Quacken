@@ -12,11 +12,9 @@ import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.command.Scheduler
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import frc.robot.maps.MAIN_JOYSTICK_PORT
+import frc.robot.maps.RobotMap.MAIN_JOYSTICK_PORT
 import frc.robot.maps.XboxMap
-import frc.robot.subsystems.Accelerometer
-import frc.robot.subsystems.AutonomousControl
-import frc.robot.subsystems.DriveTrain
+import frc.robot.subsystems.*
 
 class Robot : TimedRobot() {
     private var autoSelected: String? = null
@@ -123,12 +121,16 @@ class Robot : TimedRobot() {
         val builtInAccelerometer = Accelerometer()
 
         //Pneumatics subsystems
+        val pneumatics  = Pneumatics()
 
         //Elevator subsystems
+        val elevator = Elevator()
 
         //Box subsystems
+        val box = Box()
 
         //Feeder subsystems
+        val feeder = Feeder()
 
         //Autonomous Control Subsystem
         val autonomousControl = AutonomousControl()

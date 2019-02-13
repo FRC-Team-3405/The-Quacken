@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.commands.runners.RunAccelerometerCommand
 import frc.robot.utilities.ReportableSubsystem
 
-class Accelerometer: Subsystem(), ReportableSubsystem {
+class Accelerometer: ReportableSubsystem() {
 
     private val accelerometer = BuiltInAccelerometer()
 

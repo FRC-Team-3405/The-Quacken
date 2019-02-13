@@ -1,6 +1,5 @@
 package frc.robot.subsystems
 
-import edu.wpi.first.wpilibj.command.Subsystem
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
 import frc.robot.commands.runners.RunAutonomousCommand
@@ -10,7 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
 
-class AutonomousControl: Subsystem(), ReportableSubsystem {
+class AutonomousControl: ReportableSubsystem() {
 
     override fun initDefaultCommand() {
         defaultCommand = RunAutonomousCommand()
