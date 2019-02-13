@@ -14,10 +14,14 @@ object RobotMap {
 
     //Pneumatics
 
+
     //Elevator
+
 
     //Box
 
+
     //Feeder
+
 
 }

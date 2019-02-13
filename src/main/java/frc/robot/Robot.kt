@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.command.Scheduler
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
+import frc.robot.maps.MAIN_JOYSTICK_PORT
 import frc.robot.maps.XboxMap
 import frc.robot.subsystems.Accelerometer
+import frc.robot.subsystems.AutonomousControl
 import frc.robot.subsystems.DriveTrain
 
 class Robot : TimedRobot() {
@@ -111,7 +113,8 @@ class Robot : TimedRobot() {
         private const val kDefaultAuto = "Default"
         private const val kCustomAuto = "My Auto"
 
-        val joystick = XboxMap.Controller(Joystick(0))
+        //Control Joysticks
+        val joystick = XboxMap.Controller(Joystick(MAIN_JOYSTICK_PORT))
 
         //Drive subsystems
         val driveTrain = DriveTrain()
@@ -128,6 +131,6 @@ class Robot : TimedRobot() {
         //Feeder subsystems
 
         //Autonomous Control Subsystem
-
+        val autonomousControl = AutonomousControl()
     }
 }
