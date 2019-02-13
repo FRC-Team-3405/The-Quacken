@@ -2,7 +2,7 @@ package frc.robot.subsystems
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
-import frc.robot.commands.runners.RunAutonomousCommand
+//import frc.robot.commands.runners.RunAutonomousCommand
 import frc.robot.utilities.ReportableSubsystem
 import frc.robot.utilities.onPressed
 import kotlinx.coroutines.GlobalScope
@@ -12,7 +12,7 @@ import java.lang.Thread.sleep
 class AutonomousControl: ReportableSubsystem() {
 
     override fun initDefaultCommand() {
-        defaultCommand = RunAutonomousCommand()
+//        defaultCommand = RunAutonomousCommand()
 
         Robot.joystick.AButton.onPressed {
             //Run docking routine

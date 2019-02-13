@@ -115,10 +115,10 @@ class Robot : TimedRobot() {
 
         //Control Joysticks
         val joystick = XboxMap.Controller(Joystick(MAIN_JOYSTICK_PORT))
-        val secondaryJoystick = JoystickMap.Controller(Joystick(SECONDARY_JOYSTICK_PORT))
+//        val secondaryJoystick = JoystickMap.Controller(Joystick(SECONDARY_JOYSTICK_PORT))
 
         //Drive subsystems
-        val driveTrain = DriveTrain()
+//        val driveTrain = DriveTrain()
 
         //Sensor subsystems
         val builtInAccelerometer = Accelerometer()
@@ -137,6 +137,6 @@ class Robot : TimedRobot() {
 //        val feeder = Feeder()
 
         //Autonomous Control Subsystem
-        val autonomousControl = AutonomousControl()
+//        val autonomousControl = AutonomousControl()
     }
 }
