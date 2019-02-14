@@ -7,6 +7,7 @@ object RobotMap {
     const val SECONDARY_JOYSTICK_PORT = 1 //Joystick Controller
 
     //Sensors
+    const val GYROSCOPE_PORT = 0
 
     //Cameras
 

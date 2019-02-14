@@ -76,6 +76,11 @@ const val WHEEL_DIAMETER = 6.0
  */
 const val SLOT_TURNING = 1
 
+/**
+ * The name of the main robot gyro reported to the Smart Dashboard
+ */
+const val MAIN_GYRO_NAME = "Main"
+
 //TODO tune this PID
 /**
  * PID values for turning. May need to be adjusted. (kP should really be ~2, but our encoders are off and the motors so consistent, we're ignoring that for now)

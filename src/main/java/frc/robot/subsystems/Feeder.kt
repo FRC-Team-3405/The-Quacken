@@ -11,6 +11,8 @@ import frc.robot.utilities.ReportableSubsystem
 class Feeder: ReportableSubsystem() {
     override fun initDefaultCommand() {
 //        defaultCommand = RunFeederCommand()
+        feederMotor.isSafetyEnabled = true
+        secondaryFeederMotor.isSafetyEnabled = true
     }
 
     private val feederMotor = Spark(FEEDER_MOTOR_PORT)
