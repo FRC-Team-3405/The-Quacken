@@ -17,7 +17,8 @@ object RobotMap {
     const val BL_TALONSRX = 3 //Talon SRX
 
     //Pneumatics
-
+    const val SHIFTER_IN = 0
+    const val SHIFTER_OUT = 1
 
     //Elevator
     const val ELEVATOR_MOTOR_PORT = 4 //Talon SRX

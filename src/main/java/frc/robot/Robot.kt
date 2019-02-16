@@ -12,11 +12,14 @@ import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.command.Scheduler
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
+import frc.robot.commands.buttons.ShiftHighGearCommand
+import frc.robot.commands.buttons.ShiftLowGearCommand
 import frc.robot.maps.JoystickMap
 import frc.robot.maps.RobotMap.MAIN_JOYSTICK_PORT
 import frc.robot.maps.RobotMap.SECONDARY_JOYSTICK_PORT
 import frc.robot.maps.XboxMap
 import frc.robot.subsystems.*
+import frc.robot.utilities.onPressed
 
 class Robot : TimedRobot() {
     private var autoSelected: String? = null
@@ -26,11 +29,9 @@ class Robot : TimedRobot() {
      * This function is run when the robot is first started up.
      */
     override fun robotInit() {
-        mchooser.setDefaultOption("Default Auto", kDefaultAuto)
-        mchooser.addOption("My Auto", kCustomAuto)
-        SmartDashboard.putData("Auto choices", mchooser)
-
         //Register permanent button commands
+        joystick.RightBumperButton.onPressed(ShiftHighGearCommand())
+        joystick.LeftBumperButton.onPressed(ShiftLowGearCommand())
 
     }
 
@@ -54,14 +55,7 @@ class Robot : TimedRobot() {
      * This function is called periodically during the sandstorm period.
      */
     override fun autonomousPeriodic() {
-        when (autoSelected) {
-            kCustomAuto -> {
-            }
-            kDefaultAuto -> {
-            }
-            else -> {
-            }
-        }
+
     }
 
     /**
@@ -110,22 +104,20 @@ class Robot : TimedRobot() {
      * Static members of the robot (Subsystems)
      */
     companion object {
-        private const val kDefaultAuto = "Default"
-        private const val kCustomAuto = "My Auto"
 
         //Control Joysticks
         val joystick = XboxMap.Controller(Joystick(MAIN_JOYSTICK_PORT))
 //        val secondaryJoystick = JoystickMap.Controller(Joystick(SECONDARY_JOYSTICK_PORT))
 
         //Drive subsystems
-//        val driveTrain = DriveTrain()
+        val driveTrain = DriveTrain()
 
         //Sensor subsystems
         val builtInAccelerometer = Accelerometer()
 //        val gyroscope = Gyroscope()
 
         //Pneumatics subsystems
-//        val pneumatics  = Pneumatics()
+        val pneumatics  = Pneumatics()
 
         //Elevator subsystems
 //        val elevator = Elevator()

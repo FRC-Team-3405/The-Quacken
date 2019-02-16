@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 
 class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: String) {
-    val solenoidState
+    val solenoidState: DoubleSolenoid.Value
         get() = doubleSolenoid.get()
 
-    fun forward() {
+    private fun forward() {
         println("Pneumatic $name forward")
         report()
         if(doubleSolenoid.get() != DoubleSolenoid.Value.kForward) {
@@ -15,7 +15,7 @@ class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: St
         }
     }
 
-    fun reverse() {
+    private fun reverse() {
         println("Pneumatic $name reverse")
         report()
         if(doubleSolenoid.get() != DoubleSolenoid.Value.kReverse) {
@@ -23,7 +23,7 @@ class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: St
         }
     }
 
-    fun off() {
+    private fun off() {
         println("Pneumatic $name off")
         report()
         if(doubleSolenoid.get() != DoubleSolenoid.Value.kOff) {
@@ -56,9 +56,6 @@ class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: St
             DoubleSolenoid.Value.kOff -> {
                 println("Warning: Solenoid state was off")
                 reverse()
-            }
-            null -> {
-                println("Error: solenoid state was null")
             }
         }
     }
