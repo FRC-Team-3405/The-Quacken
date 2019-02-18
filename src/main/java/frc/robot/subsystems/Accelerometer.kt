@@ -17,6 +17,5 @@ class Accelerometer: ReportableSubsystem() {
         SmartDashboard.putNumber("accelX", accelerometer.x)
         SmartDashboard.putNumber("accelY", accelerometer.y)
         SmartDashboard.putNumber("accelZ", accelerometer.z)
-        SmartDashboard.updateValues()
     }
 }
