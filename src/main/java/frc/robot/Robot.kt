@@ -12,8 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.command.Scheduler
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import frc.robot.commands.buttons.ShiftHighGearCommand
-import frc.robot.commands.buttons.ShiftLowGearCommand
+import frc.robot.commands.buttons.*
 import frc.robot.maps.JoystickMap
 import frc.robot.maps.RobotMap.MAIN_JOYSTICK_PORT
 import frc.robot.maps.RobotMap.SECONDARY_JOYSTICK_PORT
@@ -32,7 +31,10 @@ class Robot : TimedRobot() {
         //Register permanent button commands
         joystick.RightBumperButton.onPressed(ShiftHighGearCommand())
         joystick.LeftBumperButton.onPressed(ShiftLowGearCommand())
-
+        joystick.AButton.onPressed(PunchCommand())
+        joystick.BButton.onPressed(UnPunchCommand())
+        joystick.XButton.onPressed(GrabCommand())
+        joystick.YButton.onPressed(RetractCommand())
     }
 
     /**

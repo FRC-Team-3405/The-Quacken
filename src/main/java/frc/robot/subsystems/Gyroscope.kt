@@ -1,6 +1,6 @@
 package frc.robot.subsystems
 
-//import frc.robot.commands.runners.RunGyroscopeCommand
+//import frc.robot.commands.reporters.RunGyroscopeCommand
 import edu.wpi.first.wpilibj.AnalogGyro
 import edu.wpi.first.wpilibj.AnalogInput
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard

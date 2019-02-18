@@ -3,8 +3,12 @@ package frc.robot.subsystems
 import edu.wpi.first.wpilibj.Compressor
 import edu.wpi.first.wpilibj.DoubleSolenoid
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import frc.robot.commands.runners.RunPneumaticsCommand
+import frc.robot.commands.reporters.ReportPneumaticsCommand
 import frc.robot.maps.RobotMap.COMPRESSOR_PORT
+import frc.robot.maps.RobotMap.GRABBER_IN
+import frc.robot.maps.RobotMap.GRABBER_OUT
+import frc.robot.maps.RobotMap.PUNCHER_IN
+import frc.robot.maps.RobotMap.PUNCHER_OUT
 import frc.robot.maps.RobotMap.SHIFTER_IN
 import frc.robot.maps.RobotMap.SHIFTER_OUT
 import frc.robot.utilities.PneumaticState
@@ -13,12 +17,15 @@ import frc.robot.utilities.TwoStatePneumatic
 
 class Pneumatics: ReportableSubsystem() {
     override fun initDefaultCommand() {
-        defaultCommand = RunPneumaticsCommand()
+        defaultCommand = ReportPneumaticsCommand()
         compressor.start()
+        compressor.closedLoopControl = true
     }
 
     private val compressor = Compressor(COMPRESSOR_PORT)
     private val shifter = TwoStatePneumatic(DoubleSolenoid(SHIFTER_OUT, SHIFTER_IN), "shifter")
+    private val puncher = TwoStatePneumatic(DoubleSolenoid(PUNCHER_OUT, PUNCHER_IN), "puncher")
+    private val grabber = TwoStatePneumatic(DoubleSolenoid(GRABBER_OUT, GRABBER_IN), "grabber")
 
     fun shiftHighGear() {
         shifter.setState(PneumaticState.FORWARD)
@@ -30,6 +37,22 @@ class Pneumatics: ReportableSubsystem() {
 
     fun toggleShift() {
         shifter.toggleState()
+    }
+
+    fun punch() {
+        puncher.setState(PneumaticState.FORWARD)
+    }
+
+    fun unPunch() {
+        puncher.setState(PneumaticState.BACKWARD)
+    }
+
+    fun grab() {
+        grabber.setState(PneumaticState.FORWARD)
+    }
+
+    fun retract() {
+        grabber.setState(PneumaticState.BACKWARD)
     }
 
     override fun report() {
