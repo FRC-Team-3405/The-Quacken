@@ -3,7 +3,6 @@ package frc.robot.subsystems
 import edu.wpi.first.wpilibj.Compressor
 import edu.wpi.first.wpilibj.DoubleSolenoid
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import frc.robot.commands.reporters.ReportPneumaticsCommand
 import frc.robot.maps.RobotMap.COMPRESSOR_PORT
 import frc.robot.maps.RobotMap.GRABBER_IN
 import frc.robot.maps.RobotMap.GRABBER_OUT
@@ -17,7 +16,6 @@ import frc.robot.utilities.TwoStatePneumatic
 
 class Pneumatics: ReportableSubsystem() {
     override fun initDefaultCommand() {
-        defaultCommand = ReportPneumaticsCommand()
         compressor.start()
         compressor.closedLoopControl = true
     }
@@ -29,30 +27,37 @@ class Pneumatics: ReportableSubsystem() {
 
     fun shiftHighGear() {
         shifter.setState(PneumaticState.FORWARD)
+        report()
     }
 
     fun shiftLowGear() {
         shifter.setState(PneumaticState.BACKWARD)
+        report()
     }
 
     fun toggleShift() {
         shifter.toggleState()
+        report()
     }
 
     fun punch() {
         puncher.setState(PneumaticState.FORWARD)
+        report()
     }
 
     fun unPunch() {
         puncher.setState(PneumaticState.BACKWARD)
+        report()
     }
 
     fun grab() {
         grabber.setState(PneumaticState.FORWARD)
+        report()
     }
 
     fun retract() {
         grabber.setState(PneumaticState.BACKWARD)
+        report()
     }
 
     override fun report() {

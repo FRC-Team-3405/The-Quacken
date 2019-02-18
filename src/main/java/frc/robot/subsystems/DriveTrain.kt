@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.*
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
-import frc.robot.commands.RunDriveTrainCommandGroup
+import frc.robot.commands.RunDriveTrainCommand
 import frc.robot.maps.*
 import frc.robot.maps.RobotMap.BL_TALONSRX
 import frc.robot.maps.RobotMap.BR_TALONSRX
@@ -31,7 +31,7 @@ class DriveTrain: ReportableSubsystem() {
     private var targetDistance = 0.0
 
     override fun initDefaultCommand() {
-        defaultCommand = RunDriveTrainCommandGroup()
+        defaultCommand = RunDriveTrainCommand()
 
         //Configure Front Right TalonSRX to follow Back Right
         frontRight.apply {

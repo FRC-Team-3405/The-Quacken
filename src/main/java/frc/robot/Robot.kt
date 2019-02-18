@@ -31,10 +31,7 @@ class Robot : TimedRobot() {
         //Register permanent button commands
         joystick.RightBumperButton.onPressed(ShiftHighGearCommand())
         joystick.LeftBumperButton.onPressed(ShiftLowGearCommand())
-        joystick.AButton.onPressed(PunchCommand())
-        joystick.BButton.onPressed(UnPunchCommand())
-        joystick.XButton.onPressed(GrabCommand())
-        joystick.YButton.onPressed(RetractCommand())
+        joystick.YButton.onPressed(ReleaseHatchPanelCommand())
     }
 
     /**

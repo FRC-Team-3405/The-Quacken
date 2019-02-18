@@ -3,14 +3,13 @@ package frc.robot.commands
 import edu.wpi.first.wpilibj.command.Command
 import frc.robot.Robot
 
-class RunDriveTrainCommand: Command() {
+class RunAccelerometerCommand: Command() {
     init {
-        requires(Robot.driveTrain)
+        requires(Robot.builtInAccelerometer)
     }
 
     override fun execute() {
-        Robot.driveTrain.report()
-        Robot.driveTrain.drive()
+        Robot.builtInAccelerometer.report()
     }
 
     override fun isFinished() = false

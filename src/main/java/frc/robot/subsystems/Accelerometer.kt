@@ -2,7 +2,7 @@ package frc.robot.subsystems
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
-import frc.robot.commands.reporters.ReportAccelerometerCommand
+import frc.robot.commands.RunAccelerometerCommand
 import frc.robot.utilities.ReportableSubsystem
 
 class Accelerometer: ReportableSubsystem() {
@@ -10,7 +10,7 @@ class Accelerometer: ReportableSubsystem() {
     private val accelerometer = BuiltInAccelerometer()
 
     override fun initDefaultCommand() {
-        defaultCommand = ReportAccelerometerCommand()
+        defaultCommand = RunAccelerometerCommand()
     }
 
     override fun report() {

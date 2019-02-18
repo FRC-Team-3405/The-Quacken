@@ -21,8 +21,8 @@ object RobotMap {
     const val COMPRESSOR_PORT = 0
     const val SHIFTER_IN = 0
     const val SHIFTER_OUT = 1
-    const val PUNCHER_IN = 2
-    const val PUNCHER_OUT = 3
+    const val PUNCHER_IN = 3
+    const val PUNCHER_OUT = 2
     const val GRABBER_IN = 7
     const val GRABBER_OUT = 6
 

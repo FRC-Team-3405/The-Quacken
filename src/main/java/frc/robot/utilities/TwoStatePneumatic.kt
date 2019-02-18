@@ -13,6 +13,7 @@ class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: St
         if(doubleSolenoid.get() != DoubleSolenoid.Value.kForward) {
             doubleSolenoid.set(DoubleSolenoid.Value.kForward)
         }
+        println("Pneumatic $name forwarded")
     }
 
     private fun reverse() {
@@ -21,6 +22,7 @@ class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: St
         if(doubleSolenoid.get() != DoubleSolenoid.Value.kReverse) {
             doubleSolenoid.set(DoubleSolenoid.Value.kReverse)
         }
+        println("Pneumatic $name reversed")
     }
 
     private fun off() {
@@ -29,6 +31,7 @@ class TwoStatePneumatic(private val doubleSolenoid: DoubleSolenoid, val name: St
         if(doubleSolenoid.get() != DoubleSolenoid.Value.kOff) {
             doubleSolenoid.set(DoubleSolenoid.Value.kOff)
         }
+        println("Pneumatic $name offed")
     }
 
     fun setState(pneumaticState: PneumaticState) {
