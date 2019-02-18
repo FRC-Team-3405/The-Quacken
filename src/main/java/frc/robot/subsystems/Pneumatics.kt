@@ -41,6 +41,7 @@ class Pneumatics: ReportableSubsystem() {
         SmartDashboard.putString("Gear", gear)
         SmartDashboard.putNumber("Compressor Current", compressor.compressorCurrent)
         SmartDashboard.putBoolean("Compressor Enabled", compressor.enabled())
+        SmartDashboard.putBoolean("Compressor in closed loop control mode", compressor.closedLoopControl)
         SmartDashboard.putBoolean("Pressure Switch Value", compressor.pressureSwitchValue)
         SmartDashboard.putBoolean("Fault: Compressor current too high (If true, compressor drive is disabled)", compressor.compressorCurrentTooHighFault)
         SmartDashboard.putBoolean("Sticky Fault: Compressor current too high (If true, compressor is disabled)", compressor.compressorCurrentTooHighStickyFault)
