@@ -14,12 +14,12 @@ class ReleaseThePlateCommand: Command() {
 
     override fun execute() {
         GlobalScope.launch {
-            Robot.pneumatics.plateGrabber.forward()
-            Robot.pneumatics.platePuncher.forward()
+//            Robot.pneumatics.plateGrabber.forward()
+//            Robot.pneumatics.platePuncher.forward()
             sleep(1000)
-            Robot.pneumatics.plateGrabber.reverse()
+//            Robot.pneumatics.plateGrabber.reverse()
             sleep(500)
-            Robot.pneumatics.platePuncher.reverse()
+//            Robot.pneumatics.platePuncher.reverse()
         }
     }
 

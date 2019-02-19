@@ -10,30 +10,30 @@ import frc.robot.utilties.ReportableSubsystem
 
 class Feeder: Subsystem(), ReportableSubsystem {
 
-    //private val feederMotor = Spark(0)
+    private val feederMotor = Spark(4)
 
     override fun initDefaultCommand() {
         defaultCommand = RunFeederCommand()
     }
 
-    /* fun runFeeder() {
-        when(Robot.joystick.povController) {
-            XboxMap.PovDirections.UP -> {
-                feederMotor.set(-MAX_SPEED)
-            }
-            XboxMap.PovDirections.DOWN -> {
+    fun runFeeder() {
+//        when(Robot.joystick.povController) {
+//            XboxMap.PovDirections.UP -> {
+//                feederMotor.set(-MAX_SPEED)
+//            }
+//            XboxMap.PovDirections.DOWN -> {
                 feederMotor.set(MAX_SPEED)
-            }
-            else -> {
-                feederMotor.set(0.0)
-            }
-        }
-    }*/
+//            }
+//            else -> {
+//                feederMotor.set(0.0)
+//            }
+//        }
+    }
 
     override fun report() {
-//        SmartDashboard.putString("pov", Robot.joystick.povController.toString())
-//        SmartDashboard.putBoolean("feedermotor_isalive", feederMotor.isAlive)
-//        SmartDashboard.putBoolean("feedermotor_safetyenabled", feederMotor.isSafetyEnabled)
+        SmartDashboard.putString("pov", Robot.joystick.povController.toString())
+        SmartDashboard.putBoolean("feedermotor_isalive", feederMotor.isAlive)
+        SmartDashboard.putBoolean("feedermotor_safetyenabled", feederMotor.isSafetyEnabled)
     }
 
 }
