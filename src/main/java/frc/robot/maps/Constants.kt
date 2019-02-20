@@ -8,7 +8,7 @@ const val MAX_MOTOR_SPEED = 0.7
 /**
  * Maximum speed of the elevator motor
  */
-const val MAX_ELEVATOR_SPEED = 0.3
+const val MAX_ELEVATOR_SPEED = 0.5
 
 /**
  * Whether or not the right side of the robot should be inverted.
@@ -21,9 +21,9 @@ const val INVERT_RIGHT = true
 const val TIMEOUT_MS = 30
 
 /**
- * Motor neutral dead-band, set to the minimum 0.1%.
+ * Motor neutral dead-band, set to the minimum 0.1%. Currently set to 0.5%.
  */
-const val NEUTRAL_DEADBAND = 0.001
+const val NEUTRAL_DEADBAND = 0.005
 
 /**
  * Primary and auxiliary PID Index

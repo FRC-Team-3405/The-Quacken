@@ -126,7 +126,7 @@ class Robot : TimedRobot() {
 //        val box = Box()
 
         //Feeder subsystems
-//        val feeder = Feeder()
+        val feeder = Feeder()
 
         //Autonomous Control Subsystem
 //        val autonomousControl = AutonomousControl()
