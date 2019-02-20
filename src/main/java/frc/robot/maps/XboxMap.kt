@@ -44,7 +44,7 @@ object XboxMap {
             get() = joystick.getRawAxis(XboxMap.LeftYAxis)
 
         val povController
-            get() = joystick.getPOV(XboxMap.PovController)
+            get() = PovDirections.fromInt(joystick.getPOV(XboxMap.PovController))
 
         val AButton = JoystickButton(joystick, XboxMap.AButton)
         val BButton = JoystickButton(joystick, XboxMap.BButton)
