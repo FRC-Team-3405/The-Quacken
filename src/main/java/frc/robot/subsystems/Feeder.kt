@@ -17,17 +17,17 @@ class Feeder: Subsystem(), ReportableSubsystem {
     }
 
     fun runFeeder() {
-//        when(Robot.joystick.povController) {
-//            XboxMap.PovDirections.UP -> {
-//                feederMotor.set(-MAX_SPEED)
-//            }
-//            XboxMap.PovDirections.DOWN -> {
+        when(Robot.joystick.povController) {
+            XboxMap.PovDirections.UP -> {
+                feederMotor.set(-MAX_SPEED)
+            }
+            XboxMap.PovDirections.DOWN -> {
                 feederMotor.set(MAX_SPEED)
-//            }
-//            else -> {
-//                feederMotor.set(0.0)
-//            }
-//        }
+            }
+            else -> {
+                feederMotor.set(0.0)
+            }
+        }
     }
 
     override fun report() {
