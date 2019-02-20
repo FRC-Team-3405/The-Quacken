@@ -32,6 +32,7 @@ class Robot : TimedRobot() {
         joystick.RightBumperButton.onPressed(ShiftHighGearCommand())
         joystick.LeftBumperButton.onPressed(ShiftLowGearCommand())
         joystick.YButton.onPressed(ReleaseHatchPanelCommand())
+        //Reserved for DriveTrain: joystick.RightLowerBumperButton
     }
 
     /**
@@ -106,7 +107,7 @@ class Robot : TimedRobot() {
 
         //Control Joysticks
         val joystick = XboxMap.Controller(Joystick(MAIN_JOYSTICK_PORT))
-//        val secondaryJoystick = JoystickMap.Controller(Joystick(SECONDARY_JOYSTICK_PORT))
+        val secondaryJoystick = JoystickMap.Controller(Joystick(SECONDARY_JOYSTICK_PORT))
 
         //Drive subsystems
         val driveTrain = DriveTrain()
@@ -119,7 +120,7 @@ class Robot : TimedRobot() {
         val pneumatics  = Pneumatics()
 
         //Elevator subsystems
-//        val elevator = Elevator()
+        val elevator = Elevator()
 
         //Box subsystems
 //        val box = Box()

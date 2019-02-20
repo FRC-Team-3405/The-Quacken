@@ -6,6 +6,11 @@ package frc.robot.maps
 const val MAX_MOTOR_SPEED = 0.7
 
 /**
+ * Maximum speed of the elevator motor
+ */
+const val MAX_ELEVATOR_SPEED = 0.3
+
+/**
  * Whether or not the right side of the robot should be inverted.
  */
 const val INVERT_RIGHT = true
@@ -85,6 +90,6 @@ const val MAIN_GYRO_NAME = "Main"
 /**
  * PID values for turning. May need to be adjusted. (kP should really be ~2, but our encoders are off and the motors so consistent, we're ignoring that for now)
  */
-val GAINS_TURNING = Gains(0.02, 0.0, 4.0, 0.0, 200, 1.00, 0)
+val GAINS_TURNING = Gains(4.0, 0.0, 0.0, 0.0, 200, 1.00, 0)
 
 data class Gains(val kP: Double, val kI: Double, val kD: Double, val kF: Double, val kIZone: Int, val kPeakOutput: Double, val allowableClosedLoopError: Int)

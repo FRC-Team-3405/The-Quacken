@@ -12,6 +12,7 @@ import frc.robot.maps.RobotMap.FL_TALONSRX
 import frc.robot.maps.RobotMap.FR_TALONSRX
 import frc.robot.utilities.ReportableSubsystem
 import frc.robot.utilities.configGains
+import frc.robot.utilities.onPressed
 import kotlin.math.PI
 
 class DriveTrain: ReportableSubsystem() {
@@ -24,7 +25,7 @@ class DriveTrain: ReportableSubsystem() {
     private var direction = Direction.HATCH_FORWARD
 
     /// Set to true if the robot is under autonomous control (i.e. user input is ignored)
-    var isUnderAutonomousControl = false
+    private var isUnderAutonomousControl = false
 
     private var currentHeading = 0.0
     private var targetAngle = 0.0
@@ -32,6 +33,7 @@ class DriveTrain: ReportableSubsystem() {
 
     override fun initDefaultCommand() {
         defaultCommand = RunDriveTrainCommand()
+        resetEncoderCounts()
 
         //Configure Front Right TalonSRX to follow Back Right
         frontRight.apply {
@@ -89,12 +91,18 @@ class DriveTrain: ReportableSubsystem() {
             configAuxPIDPolarity(AUX_PID_POLARITY, TIMEOUT_MS)
         }
 
+        Robot.joystick.RightLowerBumperButton.onPressed {
+            backRight.selectProfileSlot(SLOT_TURNING, PID_TURN)
 
+            currentHeading = backRight.getSelectedSensorPosition(1).toDouble()
+        }
     }
 
     fun drive() {
         if(isUnderAutonomousControl) {
 
+        } else if(Robot.joystick.RightLowerBumperButton.get()) {
+            driveStraight(Robot.joystick.leftY * MAX_MOTOR_SPEED)
         } else {
             //Teleoperator control
             val leftY = Robot.joystick.leftY * MAX_MOTOR_SPEED
@@ -154,6 +162,7 @@ class DriveTrain: ReportableSubsystem() {
     override fun report() {
         //Robot direction
         SmartDashboard.putNumber("direction", direction.sign.toDouble())
+        SmartDashboard.putNumber("heading", currentHeading)
 
         //Software-set max speed TODO add a slider on Shuffleboard to configure
         SmartDashboard.putNumber("max_speed", MAX_MOTOR_SPEED)
