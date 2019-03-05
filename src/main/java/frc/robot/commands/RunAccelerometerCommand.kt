@@ -6,6 +6,7 @@ import frc.robot.Robot
 class RunAccelerometerCommand: Command() {
     init {
         requires(Robot.builtInAccelerometer)
+        setRunWhenDisabled(true)
     }
 
     override fun execute() {

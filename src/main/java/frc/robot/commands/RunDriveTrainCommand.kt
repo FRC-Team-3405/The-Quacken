@@ -13,5 +13,11 @@ class RunDriveTrainCommand: Command() {
         Robot.driveTrain.drive()
     }
 
+    override fun interrupted() {
+        println("Normal Drive Train interrupted")
+    }
+
+    override fun isInterruptible() = true
+
     override fun isFinished() = false
 }
