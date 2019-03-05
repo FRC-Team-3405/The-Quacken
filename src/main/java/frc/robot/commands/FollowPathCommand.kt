@@ -30,7 +30,7 @@ class FollowPathCommand(val pathName: String): Command() {
         super.initialize()
 
         val leftTrajectory = PathfinderFRC.getTrajectory("$pathName.left")
-        val rightTrajectory = PathfinderFRC.getTrajectory(pathName)
+        val rightTrajectory = PathfinderFRC.getTrajectory("$pathName.right")
 
         leftFollower = EncoderFollower(leftTrajectory)
         rightFollower = EncoderFollower(rightTrajectory)
