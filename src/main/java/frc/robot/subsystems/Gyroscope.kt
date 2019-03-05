@@ -1,6 +1,5 @@
 package frc.robot.subsystems
 
-//import frc.robot.commands.reporters.RunGyroscopeCommand
 import edu.wpi.first.wpilibj.AnalogGyro
 import edu.wpi.first.wpilibj.AnalogInput
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
@@ -10,7 +9,6 @@ import frc.robot.utilities.ReportableSubsystem
 
 class Gyroscope: ReportableSubsystem() {
     override fun initDefaultCommand() {
-//        defaultCommand = RunGyroscopeCommand()
         gyroscope.name = MAIN_GYRO_NAME
     }
 

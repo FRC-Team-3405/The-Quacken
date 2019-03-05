@@ -28,6 +28,9 @@ class Robot : TimedRobot() {
      * This function is run when the robot is first started up.
      */
     override fun robotInit() {
+        Robot.gyroscope.initGyro()
+        Robot.gyroscope.calibrate()
+
         //Register permanent button commands
         joystick.RightBumperButton.onPressed(ShiftHighGearCommand())
         joystick.LeftBumperButton.onPressed(ShiftLowGearCommand())
@@ -116,7 +119,7 @@ class Robot : TimedRobot() {
 
         //Sensor subsystems
         val builtInAccelerometer = Accelerometer()
-//        val gyroscope = Gyroscope()
+        val gyroscope = Gyroscope()
 
         //Pneumatics subsystems
         val pneumatics  = Pneumatics()

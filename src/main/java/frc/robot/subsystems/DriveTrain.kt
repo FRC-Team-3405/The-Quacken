@@ -117,7 +117,7 @@ class DriveTrain: ReportableSubsystem() {
         }
     }
 
-    private fun driveSide(powerLeft: Double, powerRight: Double) {
+    fun driveSide(powerLeft: Double, powerRight: Double) {
         backLeft.set(ControlMode.PercentOutput, powerLeft * direction.sign)
         backRight.set(ControlMode.PercentOutput, powerRight * direction.sign)
         frontLeft.follow(backLeft)
@@ -152,6 +152,14 @@ class DriveTrain: ReportableSubsystem() {
 
     private fun calcDistance(encoderUnits: Double): Double {
         return (encoderUnits / ENCODER_UNITS_PER_REVOLUTION) * WHEEL_DIAMETER * PI
+    }
+
+    fun getLeftEncoder(): Int {
+        return backLeft.selectedSensorPosition
+    }
+
+    fun getRightEncoder(): Int {
+        return backRight.selectedSensorPosition
     }
 
     private fun resetEncoderCounts() {
