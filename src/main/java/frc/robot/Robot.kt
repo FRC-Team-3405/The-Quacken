@@ -8,6 +8,7 @@
 package frc.robot
 
 import edu.wpi.first.wpilibj.Joystick
+import edu.wpi.first.wpilibj.PowerDistributionPanel
 import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.command.Scheduler
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
@@ -136,5 +137,8 @@ class Robot : TimedRobot() {
 
         //Autonomous Control Subsystem
 //        val autonomousControl = AutonomousControl()
+
+        //Power
+        val pdp = PowerDistributionPanel(0)
     }
 }
