@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.command.Scheduler
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
+import frc.robot.commands.FollowPathCommand
 import frc.robot.commands.buttons.*
 import frc.robot.maps.JoystickMap
 import frc.robot.maps.RobotMap.MAIN_JOYSTICK_PORT
@@ -39,6 +40,8 @@ class Robot : TimedRobot() {
         joystick.LeftLowerBumperButton.onPressed(SwitchDirectionCommand())
         //Reserved for DriveTrain: joystick.RightLowerBumperButton
         //Reserved for Feeder: joystick.povController
+
+        joystick.ElevenButton.onPressed(FollowPathCommand("G-R"))
     }
 
     /**
