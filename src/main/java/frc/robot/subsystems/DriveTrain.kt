@@ -117,6 +117,13 @@ class DriveTrain: ReportableSubsystem() {
         }
     }
 
+    fun switchDirection() {
+        direction = when(direction) {
+            Direction.HATCH_FORWARD -> Direction.BOX_FORWARD
+            Direction.BOX_FORWARD -> Direction.HATCH_FORWARD
+        }
+    }
+
     fun driveSide(powerLeft: Double, powerRight: Double) {
         backLeft.set(ControlMode.PercentOutput, powerLeft * direction.sign)
         backRight.set(ControlMode.PercentOutput, powerRight * direction.sign)

@@ -36,6 +36,7 @@ class Robot : TimedRobot() {
         joystick.LeftBumperButton.onPressed(ShiftLowGearCommand())
         joystick.XButton.onPressed(GrabHatchPanelCommand())
         joystick.YButton.onPressed(ReleaseHatchPanelCommand())
+        joystick.LeftLowerBumperButton.onPressed(SwitchDirectionCommand())
         //Reserved for DriveTrain: joystick.RightLowerBumperButton
         //Reserved for Feeder: joystick.povController
     }
