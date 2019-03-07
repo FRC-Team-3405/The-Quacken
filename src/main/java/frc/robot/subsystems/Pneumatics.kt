@@ -35,6 +35,8 @@ class Pneumatics: ReportableSubsystem() {
         report()
     }
 
+    fun isHighGear() = shifter.solenoidState == PneumaticState.FORWARD.kDirection
+
     fun toggleShift() {
         shifter.toggleState()
         report()

@@ -105,6 +105,10 @@ class DriveTrain: ReportableSubsystem() {
             driveStraight(Robot.joystick.leftY * MAX_MOTOR_SPEED)
         } else {
             //Teleoperator control
+            if(Robot.pneumatics.isHighGear()) {
+                val leftY = Robot.joystick.leftY * MAX_MOTOR_SPEED * 0.85
+                val rightY = Robot.joystick.rightY * MAX_MOTOR_SPEED * 0.85
+            }
             val leftY = Robot.joystick.leftY * MAX_MOTOR_SPEED
             val rightY = Robot.joystick.rightY * MAX_MOTOR_SPEED
 
@@ -169,7 +173,7 @@ class DriveTrain: ReportableSubsystem() {
         return backRight.selectedSensorPosition
     }
 
-    private fun resetEncoderCounts() {
+    fun resetEncoderCounts() {
         backLeft.sensorCollection.setQuadraturePosition(0, TIMEOUT_MS)
         backRight.sensorCollection.setQuadraturePosition(0, TIMEOUT_MS)
     }

@@ -3,12 +3,12 @@ package frc.robot.maps
 /**
  * Maximum motor controller output percentage
  */
-const val MAX_MOTOR_SPEED = 0.7
+const val MAX_MOTOR_SPEED = 0.85
 
 /**
  * Maximum Robot velocity when following paths (ft/s)
  */
-const val MAX_ROBOT_VELOCITY = 10.0
+const val MAX_ROBOT_VELOCITY = 1.0
 
 /**
  * Maximum speed of the elevator motor
@@ -79,7 +79,7 @@ const val AUX_PID_POLARITY = true
 /**
  * Diameter of the robot's wheels (typically 4.0 or 6.0)
  */
-const val WHEEL_DIAMETER = 6.0
+const val WHEEL_DIAMETER = 0.15
 
 /**
  * Turning slot (Not entirely sure)

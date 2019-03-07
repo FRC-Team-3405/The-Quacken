@@ -42,7 +42,7 @@ class Robot : TimedRobot() {
         //Reserved for DriveTrain: joystick.RightLowerBumperButton
         //Reserved for Feeder: joystick.povController
 
-        joystick.ElevenButton.onPressed(FollowPathCommand("G-R"))
+        joystick.ElevenButton.onPressed(FollowPathCommand("C-D"))
     }
 
     /**
@@ -142,6 +142,6 @@ class Robot : TimedRobot() {
 //        val autonomousControl = AutonomousControl()
 
         //Power
-        val pdp = PowerDistributionPanel(0)
+//        val pdp = PowerDistributionPanel(0)
     }
 }
