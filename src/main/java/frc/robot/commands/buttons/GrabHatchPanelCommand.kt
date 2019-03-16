@@ -2,6 +2,8 @@ package frc.robot.commands.buttons
 
 import edu.wpi.first.wpilibj.command.Command
 import frc.robot.Robot
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
 
 class GrabHatchPanelCommand: Command() {
@@ -10,9 +12,11 @@ class GrabHatchPanelCommand: Command() {
     }
 
     override fun execute() {
-        Robot.pneumatics.grab()
-        sleep(250)
-        Robot.pneumatics.retract()
+        GlobalScope.launch {
+            Robot.pneumatics.grab()
+            sleep(250)
+            Robot.pneumatics.retract()
+        }
     }
 
     override fun isFinished() = true

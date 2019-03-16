@@ -8,12 +8,17 @@ const val MAX_MOTOR_SPEED = 0.85
 /**
  * Maximum Robot velocity when following paths (ft/s)
  */
-const val MAX_ROBOT_VELOCITY = 1.0
+const val MAX_ROBOT_VELOCITY = 10.0
 
 /**
  * Maximum speed of the elevator motor
  */
 const val MAX_ELEVATOR_SPEED = 0.5
+
+/**
+ * Whether or not the left side of the robot should be inverted
+ */
+const val INVERT_LEFT = false
 
 /**
  * Whether or not the right side of the robot should be inverted.
@@ -77,9 +82,9 @@ const val CLOSED_LOOP_TIME_MS = 1
 const val AUX_PID_POLARITY = true
 
 /**
- * Diameter of the robot's wheels (typically 4.0 or 6.0)
+ * Diameter of the robot's wheels IN METERS (Typically 0.15 or 0.102, which is 6 in and 4 in respectively)
  */
-const val WHEEL_DIAMETER = 0.15
+const val WHEEL_DIAMETER = 0.15 // (6 inches)
 
 /**
  * Turning slot (Not entirely sure)

@@ -47,7 +47,7 @@ class FollowPathCommand(val pathName: String): Command() {
 
 
         followerNotifier = Notifier(::followPath)
-        followerNotifier.startPeriodic(0.2)
+        followerNotifier.startPeriodic(0.2) //TODO make constant
     }
 
     private fun followPath() {

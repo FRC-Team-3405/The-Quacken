@@ -2,6 +2,7 @@ package frc.robot.subsystems
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX
 import edu.wpi.first.wpilibj.Spark
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.Robot
 //import frc.robot.commands.reporters.RunBoxCommand
 import frc.robot.maps.RobotMap.BOX_BELT_MOTOR_PORT
@@ -17,6 +18,6 @@ class Box: ReportableSubsystem() {
     private val beltMotor = Spark(BOX_BELT_MOTOR_PORT)
 
     override fun report() {
-
+        SmartDashboard.putBoolean("Box Enabled", false)
     }
 }

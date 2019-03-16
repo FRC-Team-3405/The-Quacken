@@ -2,12 +2,16 @@ package frc.robot.maps
 
 object RobotMap {
 
+    //Power
+    const val POWER_DISTRO_ID = 0
+
     //Joysticks
     const val MAIN_JOYSTICK_PORT = 0 //XBox Controller
     const val SECONDARY_JOYSTICK_PORT = 1 //Joystick Controller
 
     //Sensors
     const val GYROSCOPE_PORT = 0
+    const val PRESSURE_SENSOR_PORT = 1
 
     //Cameras
 

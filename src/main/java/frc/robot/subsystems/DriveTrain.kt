@@ -44,7 +44,7 @@ class DriveTrain: ReportableSubsystem() {
         //Configure Front Left TalonSRX to follow Front Left
         frontLeft.apply {
             follow(backLeft)
-            inverted = false
+            inverted = INVERT_LEFT
         }
 
         //Configure back left TalonSRX to use Encoder
@@ -52,7 +52,7 @@ class DriveTrain: ReportableSubsystem() {
             set(ControlMode.PercentOutput, 0.0)
             setNeutralMode(NeutralMode.Brake)
             configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, PID_PRIMARY, TIMEOUT_MS)
-            inverted = false
+            inverted = INVERT_LEFT
             setSensorPhase(true)
             setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, TIMEOUT_MS)
             configNeutralDeadband(NEUTRAL_DEADBAND, TIMEOUT_MS)
@@ -105,12 +105,12 @@ class DriveTrain: ReportableSubsystem() {
             driveStraight(Robot.joystick.leftY * MAX_MOTOR_SPEED)
         } else {
             //Teleoperator control
+            var leftY = Robot.joystick.leftY * MAX_MOTOR_SPEED
+            var rightY = Robot.joystick.rightY * MAX_MOTOR_SPEED
             if(Robot.pneumatics.isHighGear()) {
-                val leftY = Robot.joystick.leftY * MAX_MOTOR_SPEED * 0.85
-                val rightY = Robot.joystick.rightY * MAX_MOTOR_SPEED * 0.85
+                leftY *= 0.85
+                rightY *= 0.85
             }
-            val leftY = Robot.joystick.leftY * MAX_MOTOR_SPEED
-            val rightY = Robot.joystick.rightY * MAX_MOTOR_SPEED
 
             if(direction == Direction.HATCH_FORWARD) {
                 driveSide(powerLeft = leftY, powerRight = rightY)

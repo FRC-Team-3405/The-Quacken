@@ -1,11 +1,13 @@
 package frc.robot.subsystems
 
+import edu.wpi.first.wpilibj.AnalogInput
 import edu.wpi.first.wpilibj.Compressor
 import edu.wpi.first.wpilibj.DoubleSolenoid
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import frc.robot.maps.RobotMap.COMPRESSOR_PORT
 import frc.robot.maps.RobotMap.GRABBER_IN
 import frc.robot.maps.RobotMap.GRABBER_OUT
+import frc.robot.maps.RobotMap.PRESSURE_SENSOR_PORT
 import frc.robot.maps.RobotMap.PUNCHER_IN
 import frc.robot.maps.RobotMap.PUNCHER_OUT
 import frc.robot.maps.RobotMap.SHIFTER_IN
@@ -21,6 +23,7 @@ class Pneumatics: ReportableSubsystem() {
     }
 
     private val compressor = Compressor(COMPRESSOR_PORT)
+    private val pressureSensor = AnalogInput(PRESSURE_SENSOR_PORT)
     private val shifter = TwoStatePneumatic(DoubleSolenoid(SHIFTER_OUT, SHIFTER_IN), "shifter")
     private val puncher = TwoStatePneumatic(DoubleSolenoid(PUNCHER_OUT, PUNCHER_IN), "puncher")
     private val grabber = TwoStatePneumatic(DoubleSolenoid(GRABBER_OUT, GRABBER_IN), "grabber")
@@ -69,6 +72,8 @@ class Pneumatics: ReportableSubsystem() {
             DoubleSolenoid.Value.kReverse -> "Low"
         }
         SmartDashboard.putString("Gear", gear)
+        SmartDashboard.putNumber("Pressure Sensor Voltage", pressureSensor.voltage)
+        SmartDashboard.putNumber("Pressure Sensor Pressure (PSI)", analogToUnitPSI(pressureSensor.voltage))
         SmartDashboard.putNumber("Compressor Current", compressor.compressorCurrent)
         SmartDashboard.putBoolean("Compressor Enabled", compressor.enabled())
         SmartDashboard.putBoolean("Compressor in closed loop control mode", compressor.closedLoopControl)
@@ -79,5 +84,12 @@ class Pneumatics: ReportableSubsystem() {
         SmartDashboard.putBoolean("Sticky Fault: Compressor is shorted", compressor.compressorShortedStickyFault)
         SmartDashboard.putBoolean("Fault: Compressor is not connected or current is too low", compressor.compressorNotConnectedFault)
         SmartDashboard.putBoolean("Sticky Fault: Compressor is not connected or current is too low", compressor.compressorNotConnectedStickyFault)
+    }
+
+    companion object {
+        private const val SENSOR_VOLTAGE = 5.0
+        private fun analogToUnitPSI(voltage: Double): Double {
+            return 250 * (voltage / SENSOR_VOLTAGE) - 25
+        }
     }
 }

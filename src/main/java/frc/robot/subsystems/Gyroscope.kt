@@ -3,6 +3,7 @@ package frc.robot.subsystems
 import edu.wpi.first.wpilibj.AnalogGyro
 import edu.wpi.first.wpilibj.AnalogInput
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
+import frc.robot.commands.RunGyroscopeCommand
 import frc.robot.maps.MAIN_GYRO_NAME
 import frc.robot.maps.RobotMap.GYROSCOPE_PORT
 import frc.robot.utilities.ReportableSubsystem
@@ -10,6 +11,7 @@ import frc.robot.utilities.ReportableSubsystem
 class Gyroscope: ReportableSubsystem() {
     override fun initDefaultCommand() {
         gyroscope.name = MAIN_GYRO_NAME
+        defaultCommand = RunGyroscopeCommand()
     }
 
     private val gyroscope = AnalogGyro(AnalogInput(GYROSCOPE_PORT))
